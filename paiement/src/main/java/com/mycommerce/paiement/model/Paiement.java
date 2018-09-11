@@ -21,6 +21,13 @@ public class Paiement {
 
 	}
 
+	public Paiement(final Long idCommande, final Integer montant, final Long numeroCarte) {
+
+		this.idCommande = idCommande;
+		this.montant = montant;
+		this.numeroCarte = numeroCarte;
+	}
+
 	public Paiement(final Long id, final Long idCommande, final Integer montant, final Long numeroCarte) {
 
 		this.id = id;

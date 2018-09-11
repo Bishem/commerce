@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.mycommerce.client.bean.ProduitBean;
 
-@FeignClient(name = "produit", url = "localhost:9001", decode404 = true)
+@FeignClient(name = "produit", url = "localhost:9001")
 public interface ProduitProxy {
 
 	@GetMapping(value = "/produit")

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.mycommerce.client.bean.PaiementBean;
 
-@FeignClient(name = "paiement", url = "localhost:9003", decode404 = true)
+@FeignClient(name = "paiement", url = "localhost:9003")
 public interface PaiementProxy {
 
 	@PostMapping(value = "/paiement")

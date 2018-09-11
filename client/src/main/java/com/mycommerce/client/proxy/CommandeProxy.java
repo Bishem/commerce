@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.mycommerce.client.bean.CommandeBean;
 
-@FeignClient(name = "commande", url = "localhost:9002", decode404 = true)
+@FeignClient(name = "commande", url = "localhost:9002")
 public interface CommandeProxy {
 
 	@PostMapping(value = "/commande")

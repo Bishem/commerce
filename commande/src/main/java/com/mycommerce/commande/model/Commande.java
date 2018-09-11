@@ -21,6 +21,15 @@ public class Commande {
 
 	}
 
+	public Commande(final Long idProduit, final Date dateCommande, final Integer quantite,
+			final Boolean commandePayee) {
+
+		this.idProduit = idProduit;
+		this.dateCommande = dateCommande;
+		this.quantite = quantite;
+		this.commandePayee = commandePayee;
+	}
+
 	public Commande(final Long id, final Long idProduit, final Date dateCommande, final Integer quantite,
 			final Boolean commandePayee) {
 

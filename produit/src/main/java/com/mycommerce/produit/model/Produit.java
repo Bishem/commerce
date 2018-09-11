@@ -19,6 +19,14 @@ public class Produit {
 
 	}
 
+	public Produit(final String titre, final String description, final String image, final Double prix) {
+
+		this.titre = titre;
+		this.description = description;
+		this.image = image;
+		this.prix = prix;
+	}
+
 	public Produit(final Long id, final String titre, final String description, final String image, final Double prix) {
 
 		this.id = id;
