@@ -1,4 +1,4 @@
-package com.mycommerce.produit.configurations;
+package com.mycommerce.produit.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

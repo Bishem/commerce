@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mycommerce.produit.configurations.ApplicationPropertiesConfiguration;
+import com.mycommerce.produit.configuration.ApplicationPropertiesConfiguration;
 import com.mycommerce.produit.dao.ProduitDao;
 import com.mycommerce.produit.model.Produit;
 import com.mycommerce.produit.web.exception.ProduitIntrouvableException;

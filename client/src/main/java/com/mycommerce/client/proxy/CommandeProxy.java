@@ -1,5 +1,6 @@
 package com.mycommerce.client.proxy;
 
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.mycommerce.client.bean.CommandeBean;
 
-@FeignClient(name = "commande", url = "localhost:9002")
+@FeignClient(name = "commande")
+@RibbonClient(name = "commande")
 public interface CommandeProxy {
 
 	@PostMapping(value = "/commande")

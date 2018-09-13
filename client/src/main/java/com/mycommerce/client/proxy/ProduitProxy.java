@@ -2,13 +2,15 @@ package com.mycommerce.client.proxy;
 
 import java.util.List;
 
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.mycommerce.client.bean.ProduitBean;
 
-@FeignClient(name = "produit", url = "localhost:9001")
+@FeignClient(name = "produit")
+@RibbonClient(name = "produit")
 public interface ProduitProxy {
 
 	@GetMapping(value = "/produit")
