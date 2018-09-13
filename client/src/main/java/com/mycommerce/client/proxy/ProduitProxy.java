@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.mycommerce.client.bean.ProduitBean;
 
-@FeignClient(name = "produit")
+@FeignClient(name = "zuul")
 @RibbonClient(name = "produit")
 public interface ProduitProxy {
 

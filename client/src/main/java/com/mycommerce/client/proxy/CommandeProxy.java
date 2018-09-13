@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.mycommerce.client.bean.CommandeBean;
 
-@FeignClient(name = "commande")
+@FeignClient(name = "zuul")
 @RibbonClient(name = "commande")
 public interface CommandeProxy {
 
