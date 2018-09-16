@@ -4,40 +4,30 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Commande {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long	id;
-	private Long	idProduit;
-	private Date	dateCommande;
+	private Date	date;
 	private Integer	quantite;
-	private Boolean	commandePayee;
+	private Boolean	estPayee;
+
+	private Long idProduit;
 
 	public Commande() {
 
 	}
 
-	public Commande(final Long idProduit, final Date dateCommande, final Integer quantite,
-			final Boolean commandePayee) {
+	public Commande(final Date date, final Integer quantite, final Long idProduit) {
 
-		this.idProduit = idProduit;
-		this.dateCommande = dateCommande;
+		this.date = date;
 		this.quantite = quantite;
-		this.commandePayee = commandePayee;
-	}
-
-	public Commande(final Long id, final Long idProduit, final Date dateCommande, final Integer quantite,
-			final Boolean commandePayee) {
-
-		this.id = id;
 		this.idProduit = idProduit;
-		this.dateCommande = dateCommande;
-		this.quantite = quantite;
-		this.commandePayee = commandePayee;
 	}
 
 	public Long getId() {
@@ -45,29 +35,19 @@ public class Commande {
 		return this.id;
 	}
 
-	public void setId(final Long id) {
+	public Date getDate() {
 
-		this.id = id;
+		return this.date;
+	}
+
+	public Boolean getEstPayee() {
+
+		return this.estPayee;
 	}
 
 	public Long getIdProduit() {
 
 		return this.idProduit;
-	}
-
-	public void setIdProduit(final Long idProduit) {
-
-		this.idProduit = idProduit;
-	}
-
-	public Date getDateCommande() {
-
-		return this.dateCommande;
-	}
-
-	public void setDateCommande(final Date dateCommande) {
-
-		this.dateCommande = dateCommande;
 	}
 
 	public Integer getQuantite() {
@@ -80,20 +60,35 @@ public class Commande {
 		this.quantite = quantite;
 	}
 
-	public Boolean getCommandePayee() {
+	public void setId(final Long id) {
 
-		return this.commandePayee;
+		this.id = id;
 	}
 
-	public void setCommandePayee(final Boolean commandePayee) {
+	public void setDate(final Date date) {
 
-		this.commandePayee = commandePayee;
+		this.date = date;
+	}
+
+	public void setEstPayee(final Boolean estPayee) {
+
+		this.estPayee = estPayee;
+	}
+
+	public void setIdProduit(final Long idProduit) {
+
+		this.idProduit = idProduit;
 	}
 
 	@Override
 	public String toString() {
 
-		return "commande{" + "id=" + this.id + ", idProduit=" + this.idProduit + ", dateCommande=" + this.dateCommande
-				+ ", quantite=" + this.quantite + ", commandePayee=" + this.commandePayee + '}';
+		return "Commande{" +
+				"id=" + id +
+				", date=" + date +
+				", quantite=" + quantite +
+				", estPayee=" + estPayee +
+				", idProduit=" + idProduit +
+				'}';
 	}
 }

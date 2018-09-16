@@ -4,7 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "config")
+@ConfigurationProperties(prefix = "myConfigs")
 public class ApplicationPropertiesConfiguration {
 
 	private Integer limiteDeProduits;

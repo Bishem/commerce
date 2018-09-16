@@ -32,10 +32,9 @@ public class ProduitController {
 			throw new ProduitIntrouvableException(new String("Aucun produit n'est disponible à la vente"));
 		}
 
-//		final List<Produit> listeLimitee = produits.subList(0, this.appProps.getLimiteDeProduits());
+		final List<Produit> produitsLimites = produits.subList(0, this.appProps.getLimiteDeProduits());
 
-//		return listeLimitee;
-		return produits;
+		return produitsLimites;
 	}
 
 	// Récuperer un produit par son id

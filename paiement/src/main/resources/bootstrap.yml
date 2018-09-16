@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: paiement
+  cloud:
+    config:
+      uri: http://localhost:9101

@@ -9,4 +9,5 @@ import com.mycommerce.paiement.model.Paiement;
 public interface PaiementDao extends JpaRepository<Paiement, Long> {
 
 	Paiement findByidCommande(Long idCommande);
+
 }

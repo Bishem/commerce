@@ -1,0 +1,11 @@
+server:
+  port: 9101
+  
+spring:
+  application:
+    name: config
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/Cao-Lao/mycommerce-config.git

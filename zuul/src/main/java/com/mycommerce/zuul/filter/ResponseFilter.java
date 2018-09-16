@@ -1,6 +1,6 @@
 package com.mycommerce.zuul.filter;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +11,7 @@ import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 
 @Component
-public class LogFilter extends ZuulFilter {
+public class ResponseFilter extends ZuulFilter {
 
 	Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -24,9 +24,9 @@ public class LogFilter extends ZuulFilter {
 	@Override
 	public Object run() throws ZuulException {
 
-		final HttpServletRequest request = RequestContext.getCurrentContext().getRequest();
+		final HttpServletResponse response = RequestContext.getCurrentContext().getResponse();
 
-		this.log.info("**** Requête interceptée ! L'URL est : {} ", request.getRequestURL());
+		this.log.info("**** CODE HTTP {} ", response.getStatus());
 
 		return null;
 	}
@@ -40,7 +40,7 @@ public class LogFilter extends ZuulFilter {
 	@Override
 	public int filterOrder() {
 
-		return 2;
+		return 1;
 	}
 
 }

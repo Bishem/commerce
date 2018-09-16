@@ -20,10 +20,10 @@ import com.mycommerce.paiement.web.exception.PaiementImpossibleException;
 public class PaiementController {
 
 	@Autowired
-	PaiementDao paiementDao;
+	private PaiementDao paiementDao;
 
 	@Autowired
-	CommandeProxy commandeProxy;
+	private CommandeProxy commandeProxy;
 
 	/*
 	 * Opération pour enregistrer un paiement et notifier le microservice commandes pour mettre à jour le statut de la commande en question
@@ -31,35 +31,26 @@ public class PaiementController {
 	@PostMapping(value = "/paiement")
 	public ResponseEntity<Paiement> payerUneCommande(@RequestBody final Paiement paiement) {
 
-		// Vérifions s'il y a déjà un paiement enregistré pour cette commande
-		final Paiement paiementExistant = this.paiementDao.findByidCommande(paiement.getIdCommande());
+		final Paiement paiementRecupere = this.paiementDao.findByidCommande(paiement.getIdCommande());
 
-		if (paiementExistant != null) {
-			throw new PaiementExistantException(new String("Cette commande est déjà payée"));
+		if (paiementRecupere.equals(null)) {
+			throw new PaiementExistantException("Cette commande est déjà payée");
 		}
 
-		// Enregistrer le paiement
-		final Paiement nouveauPaiement = this.paiementDao.save(paiement);
+		final Paiement paiementAjoutee = this.paiementDao.save(paiement);
 
-		// si le DAO nous retourne null c'est que il ya eu un problème lors de l'enregistrement
-		if (nouveauPaiement == null) {
+		if (paiementAjoutee.equals(null)) {
 			throw new PaiementImpossibleException(
-					new String("Erreur, impossible d'établir le paiement, réessayez plus tard"));
+					"Erreur, impossible d'établir le paiement, réessayez plus tard");
 		}
 
-		// On récupère la commande correspondant à ce paiement en faisant appel au Microservice commandes
-		final Optional<CommandeBean> commandeReq = this.commandeProxy.recupererUneCommande(paiement.getIdCommande());
+		final Optional<CommandeBean> commandeRecuperee = this.commandeProxy
+				.recupererUneCommande(paiement.getIdCommande());
 
-		// commandeReq.get() permet d'extraire l'objet de type CommandeBean de Optional
-		final CommandeBean commande = commandeReq.get();
+		commandeRecuperee.get().setEstPayee(true);
 
-		// on met à jour l'objet pour marquer la commande comme étant payée
-		commande.setCommandePayee(true);
+		this.commandeProxy.updateCommande(commandeRecuperee.get());
 
-		// on envoi l'objet commande mis à jour au microservice commande afin de mettre à jour le status de la commande.
-		this.commandeProxy.updateCommande(commande);
-
-		return new ResponseEntity<>(nouveauPaiement, HttpStatus.CREATED);
+		return new ResponseEntity<>(paiementAjoutee, HttpStatus.CREATED);
 	}
-
 }

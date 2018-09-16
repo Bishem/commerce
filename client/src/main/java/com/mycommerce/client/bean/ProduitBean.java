@@ -12,10 +12,8 @@ public class ProduitBean {
 
 	}
 
-	public ProduitBean(final Long id, final String titre, final String description, final String image,
-			final Double prix) {
+	public ProduitBean(final String titre, final String description, final String image, final Double prix) {
 
-		this.id = id;
 		this.titre = titre;
 		this.description = description;
 		this.image = image;
@@ -72,10 +70,4 @@ public class ProduitBean {
 		this.prix = prix;
 	}
 
-	@Override
-	public String toString() {
-
-		return "ProduitBean{" + "id=" + this.id + ", titre='" + this.titre + '\'' + ", description='" + this.description
-				+ '\'' + ", image='" + this.image + '\'' + ", prix=" + this.prix + '}';
-	}
 }

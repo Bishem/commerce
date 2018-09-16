@@ -1,5 +1,7 @@
 package com.mycommerce.client.proxy;
 
+import java.util.Optional;
+
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -18,5 +20,5 @@ public interface CommandeProxy {
 	public ResponseEntity<CommandeBean> ajouterCommande(@RequestBody final CommandeBean commandeBean);
 
 	@GetMapping(value = "/commande/{id}")
-	public CommandeBean recupererUneCommande(@PathVariable(value = "id") final Long id);
+	public Optional<CommandeBean> recupererUneCommande(@PathVariable(value = "id") final Long id);
 }
