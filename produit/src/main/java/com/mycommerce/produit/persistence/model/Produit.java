@@ -28,6 +28,15 @@ public class Produit {
 		this.prix = prix;
 	}
 
+	public Produit(final Long id, final String titre, final String description, final String image, final Double prix) {
+
+		this.id = id;
+		this.titre = titre;
+		this.description = description;
+		this.image = image;
+		this.prix = prix;
+	}
+
 	public Long getId() {
 
 		return this.id;
@@ -81,12 +90,7 @@ public class Produit {
 	@Override
 	public String toString() {
 
-		return "Produit{" +
-				"id=" + id +
-				", titre='" + titre + '\'' +
-				", description='" + description + '\'' +
-				", image='" + image + '\'' +
-				", prix=" + prix +
-				'}';
+		return "Produit{" + "id=" + this.id + ", titre='" + this.titre + '\'' + ", description='" + this.description
+				+ '\'' + ", image='" + this.image + '\'' + ", prix=" + this.prix + '}';
 	}
 }

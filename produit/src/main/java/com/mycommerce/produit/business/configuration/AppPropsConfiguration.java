@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "my-configs")
-public class ApplicationPropertiesConfiguration {
+public class AppPropsConfiguration {
 
 	private Integer limiteDeProduits;
 

@@ -3,12 +3,14 @@ package com.mycommerce.produit.rest.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mycommerce.produit.business.configuration.ApplicationPropertiesConfiguration;
+import com.mycommerce.produit.business.configuration.AppPropsConfiguration;
 import com.mycommerce.produit.business.exception.ProduitIntrouvableException;
 import com.mycommerce.produit.persistence.dao.ProduitDao;
 import com.mycommerce.produit.persistence.model.Produit;
@@ -16,15 +18,31 @@ import com.mycommerce.produit.persistence.model.Produit;
 @RestController
 public class ProduitController {
 
-	@Autowired
-	ProduitDao produitDao;
+	private static final Logger LOG = LoggerFactory.getLogger(ProduitController.class);
+
+	ProduitDao				produitDao;
+	AppPropsConfiguration	appProps;
+
+	public ProduitController() {
+
+	}
 
 	@Autowired
-	ApplicationPropertiesConfiguration appProps;
+	public void setProduitDao(final ProduitDao produitDao) {
 
-	// Affiche la liste de tous les produits disponibles
+		this.produitDao = produitDao;
+	}
+
+	@Autowired
+	public void setAppProps(final AppPropsConfiguration appProps) {
+
+		this.appProps = appProps;
+	}
+
 	@GetMapping(value = "/produit")
 	public List<Produit> listeDesProduits() {
+
+		ProduitController.LOG.info("**** using {}", this.getClass());
 
 		final List<Produit> produits = this.produitDao.findAll();
 
@@ -37,9 +55,10 @@ public class ProduitController {
 		return produitsLimites;
 	}
 
-	// Récuperer un produit par son id
 	@GetMapping(value = "/produit/{id}")
 	public Optional<Produit> recupererUnProduit(@PathVariable final Long id) {
+
+		ProduitController.LOG.info("**** using {}", this.getClass());
 
 		final Optional<Produit> produit = this.produitDao.findById(id);
 

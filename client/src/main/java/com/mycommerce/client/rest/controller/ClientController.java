@@ -23,16 +23,34 @@ import com.mycommerce.client.business.binder.proxy.ProduitProxy;
 @Controller
 public class ClientController {
 
-	@Autowired
-	private ProduitProxy produitProxy;
+	private final Random random;
+
+	private ProduitProxy	produitProxy;
+	private CommandeProxy	commandeProxy;
+	private PaiementProxy	paiementProxy;
+
+	public ClientController() {
+
+		this.random = new Random();
+	}
 
 	@Autowired
-	private CommandeProxy commandeProxy;
+	public void setProduitProxy(final ProduitProxy produitProxy) {
+
+		this.produitProxy = produitProxy;
+	}
 
 	@Autowired
-	private PaiementProxy paiementProxy;
+	public void setCommandeProxy(final CommandeProxy commandeProxy) {
 
-	private final Random entropie = new Random();
+		this.commandeProxy = commandeProxy;
+	}
+
+	@Autowired
+	public void setPaiementProxy(final PaiementProxy paiementProxy) {
+
+		this.paiementProxy = paiementProxy;
+	}
 
 	@RequestMapping("")
 	public String accueil(final Model model) {
@@ -97,11 +115,11 @@ public class ClientController {
 
 	private Integer quantiteAleatoire() {
 
-		return (int) (this.entropie.nextInt(10) + 10);
+		return (int) (this.random.nextInt(10) + 10);
 	}
 
 	private Long numeroCarteAleatoire() {
 
-		return (long) (this.entropie.nextInt(1000000000) + 1000000000);
+		return (long) (this.random.nextInt(1000000000) + 1000000000);
 	}
 }

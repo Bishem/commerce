@@ -30,6 +30,14 @@ public class Paiement {
 		this.idCommande = idCommande;
 	}
 
+	public Paiement(final Long id, final Long numeroCarte, final Integer montant, final Long idCommande) {
+
+		this.id = id;
+		this.numeroCarte = numeroCarte;
+		this.montant = montant;
+		this.idCommande = idCommande;
+	}
+
 	public Long getId() {
 
 		return this.id;
@@ -73,11 +81,7 @@ public class Paiement {
 	@Override
 	public String toString() {
 
-		return "Paiement{" +
-				"id=" + id +
-				", numeroCarte=" + numeroCarte +
-				", montant=" + montant +
-				", idCommande=" + idCommande +
-				'}';
+		return "Paiement{" + "id=" + this.id + ", numeroCarte=" + this.numeroCarte + ", montant=" + this.montant
+				+ ", idCommande=" + this.idCommande + '}';
 	}
 }

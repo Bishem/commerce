@@ -22,6 +22,16 @@ public class CommandeBean {
 		this.idProduit = idProduit;
 	}
 
+	public CommandeBean(final Long id, final Date date, final Integer quantite, final Boolean estPayee,
+			final Long idProduit) {
+
+		this.id = id;
+		this.date = date;
+		this.quantite = quantite;
+		this.estPayee = estPayee;
+		this.idProduit = idProduit;
+	}
+
 	public Long getId() {
 
 		return this.id;
@@ -70,5 +80,12 @@ public class CommandeBean {
 	public void setIdProduit(final Long idProduit) {
 
 		this.idProduit = idProduit;
+	}
+
+	@Override
+	public String toString() {
+
+		return "CommandeBean{" + "id=" + this.id + ", date=" + this.date + ", quantite=" + this.quantite + ", estPayee="
+				+ this.estPayee + ", idProduit=" + this.idProduit + '}';
 	}
 }

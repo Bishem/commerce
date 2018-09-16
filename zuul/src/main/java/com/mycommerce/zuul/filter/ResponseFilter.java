@@ -13,7 +13,7 @@ import com.netflix.zuul.exception.ZuulException;
 @Component
 public class ResponseFilter extends ZuulFilter {
 
-	Logger log = LoggerFactory.getLogger(this.getClass());
+	private static final Logger LOG = LoggerFactory.getLogger(ResponseFilter.class);
 
 	@Override
 	public boolean shouldFilter() {
@@ -26,7 +26,7 @@ public class ResponseFilter extends ZuulFilter {
 
 		final HttpServletResponse response = RequestContext.getCurrentContext().getResponse();
 
-		this.log.info("**** CODE HTTP {} ", response.getStatus());
+		ResponseFilter.LOG.info("**** CODE HTTP {} ", response.getStatus());
 
 		return null;
 	}

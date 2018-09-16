@@ -2,6 +2,8 @@ package com.mycommerce.paiement.rest.controller;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,17 +21,34 @@ import com.mycommerce.paiement.persistence.model.Paiement;
 @RestController
 public class PaiementController {
 
-	@Autowired
-	private PaiementDao paiementDao;
+	private static final Logger LOG = LoggerFactory.getLogger(PaiementController.class);
+
+	private PaiementDao		paiementDao;
+	private CommandeProxy	commandeProxy;
+
+	public PaiementController() {
+
+	}
 
 	@Autowired
-	private CommandeProxy commandeProxy;
+	public void setPaiementDao(final PaiementDao paiementDao) {
+
+		this.paiementDao = paiementDao;
+	}
+
+	@Autowired
+	public void setCommandeProxy(final CommandeProxy commandeProxy) {
+
+		this.commandeProxy = commandeProxy;
+	}
 
 	/*
 	 * Opération pour enregistrer un paiement et notifier le microservice commandes pour mettre à jour le statut de la commande en question
 	 **/
 	@PostMapping(value = "/paiement")
 	public ResponseEntity<Paiement> payerUneCommande(@RequestBody final Paiement paiement) {
+
+		PaiementController.LOG.info("**** using {}", this.getClass());
 
 		final Paiement paiementRecupere = this.paiementDao.findByidCommande(paiement.getIdCommande());
 

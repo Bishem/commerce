@@ -30,6 +30,16 @@ public class Commande {
 		this.idProduit = idProduit;
 	}
 
+	public Commande(final Long id, final Date date, final Integer quantite, final Boolean estPayee,
+			final Long idProduit) {
+
+		this.id = id;
+		this.date = date;
+		this.quantite = quantite;
+		this.estPayee = estPayee;
+		this.idProduit = idProduit;
+	}
+
 	public Long getId() {
 
 		return this.id;
@@ -83,12 +93,7 @@ public class Commande {
 	@Override
 	public String toString() {
 
-		return "Commande{" +
-				"id=" + id +
-				", date=" + date +
-				", quantite=" + quantite +
-				", estPayee=" + estPayee +
-				", idProduit=" + idProduit +
-				'}';
+		return "Commande{" + "id=" + this.id + ", date=" + this.date + ", quantite=" + this.quantite + ", estPayee="
+				+ this.estPayee + ", idProduit=" + this.idProduit + '}';
 	}
 }

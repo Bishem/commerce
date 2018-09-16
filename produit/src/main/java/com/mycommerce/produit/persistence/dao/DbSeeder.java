@@ -9,8 +9,17 @@ import com.mycommerce.produit.persistence.model.Produit;
 @Component
 public class DbSeeder implements CommandLineRunner {
 
-	@Autowired
 	private ProduitDao produitDao;
+
+	public DbSeeder() {
+
+	}
+
+	@Autowired
+	public void setProduitDao(final ProduitDao produitDao) {
+
+		this.produitDao = produitDao;
+	}
 
 	@Override
 	public void run(final String... args) throws Exception {

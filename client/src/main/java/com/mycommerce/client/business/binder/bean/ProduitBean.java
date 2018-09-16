@@ -20,6 +20,16 @@ public class ProduitBean {
 		this.prix = prix;
 	}
 
+	public ProduitBean(final Long id, final String titre, final String description, final String image,
+			final Double prix) {
+
+		this.id = id;
+		this.titre = titre;
+		this.description = description;
+		this.image = image;
+		this.prix = prix;
+	}
+
 	public Long getId() {
 
 		return this.id;
@@ -70,4 +80,10 @@ public class ProduitBean {
 		this.prix = prix;
 	}
 
+	@Override
+	public String toString() {
+
+		return "ProduitBean{" + "id=" + this.id + ", titre='" + this.titre + '\'' + ", description='" + this.description
+				+ '\'' + ", image='" + this.image + '\'' + ", prix=" + this.prix + '}';
+	}
 }

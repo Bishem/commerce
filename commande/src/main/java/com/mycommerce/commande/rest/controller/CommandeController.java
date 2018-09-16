@@ -2,6 +2,8 @@ package com.mycommerce.commande.rest.controller;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +22,24 @@ import com.mycommerce.commande.persistence.model.Commande;
 @RestController
 public class CommandeController {
 
-	@Autowired
+	private static final Logger LOG = LoggerFactory.getLogger(CommandeController.class);
+
 	CommandeDao commandeDao;
+
+	public CommandeController() {
+
+	}
+
+	@Autowired
+	public void setCommandeDao(final CommandeDao commandeDao) {
+
+		this.commandeDao = commandeDao;
+	}
 
 	@PostMapping(value = "/commande")
 	public ResponseEntity<Commande> ajouterCommande(@RequestBody final Commande commande) {
+
+		CommandeController.LOG.info("**** using {}", this.getClass());
 
 		final Commande nouvelleCommande = this.commandeDao.save(commande);
 
@@ -37,6 +52,8 @@ public class CommandeController {
 
 	@GetMapping(value = "/commande/{id}")
 	public Optional<Commande> recupererUneCommande(@PathVariable final Long id) {
+
+		CommandeController.LOG.info("**** using {}", this.getClass());
 
 		final Optional<Commande> commande = this.commandeDao.findById(id);
 

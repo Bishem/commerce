@@ -19,6 +19,14 @@ public class PaiementBean {
 		this.idCommande = idCommande;
 	}
 
+	public PaiementBean(final Long id, final Long numeroCarte, final Double montant, final Long idCommande) {
+
+		this.id = id;
+		this.numeroCarte = numeroCarte;
+		this.montant = montant;
+		this.idCommande = idCommande;
+	}
+
 	public Long getId() {
 
 		return this.id;
@@ -59,4 +67,10 @@ public class PaiementBean {
 		this.idCommande = idCommande;
 	}
 
+	@Override
+	public String toString() {
+
+		return "PaiementBean{" + "id=" + this.id + ", numeroCarte=" + this.numeroCarte + ", montant=" + this.montant
+				+ ", idCommande=" + this.idCommande + '}';
+	}
 }
