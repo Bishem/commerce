@@ -40,8 +40,7 @@ public class PaiementController {
 		final Paiement paiementAjoutee = this.paiementDao.save(paiement);
 
 		if (paiementAjoutee.equals(null)) {
-			throw new PaiementImpossibleException(
-					"Erreur, impossible d'établir le paiement, réessayez plus tard");
+			throw new PaiementImpossibleException("Erreur, impossible d'établir le paiement, réessayez plus tard");
 		}
 
 		final Optional<CommandeBean> commandeRecuperee = this.commandeProxy

@@ -6,6 +6,7 @@ spring:
     name: config
   cloud:
     config:
+      enabled: true
       server:
         git:
           uri: https://github.com/Cao-Lao/mycommerce-config.git
