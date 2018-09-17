@@ -26,7 +26,7 @@ public class LogFilter extends ZuulFilter {
 
 		final HttpServletRequest request = RequestContext.getCurrentContext().getRequest();
 
-		LogFilter.LOG.info("**** Requête interceptée ! L'URL est : {} ", request.getRequestURL());
+		LogFilter.LOG.info("**** Requête interceptée ! L'URL est : {}", request.getRequestURL());
 
 		return null;
 	}

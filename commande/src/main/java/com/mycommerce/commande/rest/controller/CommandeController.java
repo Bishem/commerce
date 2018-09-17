@@ -39,12 +39,12 @@ public class CommandeController {
 	@PostMapping(value = "/commande")
 	public ResponseEntity<Commande> ajouterCommande(@RequestBody final Commande commande) {
 
-		CommandeController.LOG.info("**** using {}", this.getClass());
+		CommandeController.LOG.info("**** using {}", this.getClass().getSimpleName());
 
 		final Commande nouvelleCommande = this.commandeDao.save(commande);
 
-		if (nouvelleCommande.equals(null)) {
-			throw new CommandeNonAjoutableException(new String("Impossible d'ajouter cette commande"));
+		if (nouvelleCommande == null) {
+			throw new CommandeNonAjoutableException("Impossible d'ajouter cette commande");
 		}
 
 		return new ResponseEntity<>(commande, HttpStatus.CREATED);
@@ -53,12 +53,12 @@ public class CommandeController {
 	@GetMapping(value = "/commande/{id}")
 	public Optional<Commande> recupererUneCommande(@PathVariable final Long id) {
 
-		CommandeController.LOG.info("**** using {}", this.getClass());
+		CommandeController.LOG.info("**** using {}", this.getClass().getSimpleName());
 
 		final Optional<Commande> commande = this.commandeDao.findById(id);
 
 		if (!commande.isPresent()) {
-			throw new CommandeIntrouvableException(new String("Cette commande n'existe pas"));
+			throw new CommandeIntrouvableException("Cette commande n'existe pas");
 		}
 
 		return commande;
@@ -72,6 +72,8 @@ public class CommandeController {
 	 **/
 	@PutMapping(value = "/commande")
 	public void updateCommande(@RequestBody final Commande commande) {
+
+		CommandeController.LOG.info("**** using {}", this.getClass().getSimpleName());
 
 		this.commandeDao.save(commande);
 	}

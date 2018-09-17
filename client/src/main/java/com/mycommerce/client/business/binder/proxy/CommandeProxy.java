@@ -16,9 +16,9 @@ import com.mycommerce.client.business.binder.bean.CommandeBean;
 @RibbonClient(name = "commande")
 public interface CommandeProxy {
 
-	@PostMapping(value = "/commande")
+	@PostMapping(value = "/commande/commande")
 	public ResponseEntity<CommandeBean> ajouterCommande(@RequestBody final CommandeBean commandeBean);
 
-	@GetMapping(value = "/commande/{id}")
+	@GetMapping(value = "/commande/commande/{id}")
 	public Optional<CommandeBean> recupererUneCommande(@PathVariable(value = "id") final Long id);
 }

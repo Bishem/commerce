@@ -42,12 +42,12 @@ public class ProduitController {
 	@GetMapping(value = "/produit")
 	public List<Produit> listeDesProduits() {
 
-		ProduitController.LOG.info("**** using {}", this.getClass());
+		ProduitController.LOG.info("**** using {}", this.getClass().getSimpleName());
 
 		final List<Produit> produits = this.produitDao.findAll();
 
 		if (produits.isEmpty()) {
-			throw new ProduitIntrouvableException(new String("Aucun produit n'est disponible à la vente"));
+			throw new ProduitIntrouvableException("Aucun produit n'est disponible à la vente");
 		}
 
 		final List<Produit> produitsLimites = produits.subList(0, this.appProps.getLimiteDeProduits());
@@ -58,13 +58,12 @@ public class ProduitController {
 	@GetMapping(value = "/produit/{id}")
 	public Optional<Produit> recupererUnProduit(@PathVariable final Long id) {
 
-		ProduitController.LOG.info("**** using {}", this.getClass());
+		ProduitController.LOG.info("**** using {}", this.getClass().getSimpleName());
 
 		final Optional<Produit> produit = this.produitDao.findById(id);
 
 		if (!produit.isPresent()) {
-			throw new ProduitIntrouvableException(
-					new String("Le produit correspondant à l'id " + id + " n'existe pas"));
+			throw new ProduitIntrouvableException("Le produit correspondant à l'id " + id + " n'existe pas");
 		}
 
 		return produit;

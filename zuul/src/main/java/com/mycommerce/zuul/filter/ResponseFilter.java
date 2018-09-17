@@ -26,7 +26,7 @@ public class ResponseFilter extends ZuulFilter {
 
 		final HttpServletResponse response = RequestContext.getCurrentContext().getResponse();
 
-		ResponseFilter.LOG.info("**** CODE HTTP {} ", response.getStatus());
+		ResponseFilter.LOG.info("**** CODE HTTP {}", response.getStatus());
 
 		return null;
 	}

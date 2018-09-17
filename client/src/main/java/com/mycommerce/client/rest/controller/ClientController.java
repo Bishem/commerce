@@ -1,82 +1,55 @@
 package com.mycommerce.client.rest.controller;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mycommerce.client.business.binder.bean.CommandeBean;
 import com.mycommerce.client.business.binder.bean.PaiementBean;
 import com.mycommerce.client.business.binder.bean.ProduitBean;
-import com.mycommerce.client.business.binder.proxy.CommandeProxy;
-import com.mycommerce.client.business.binder.proxy.PaiementProxy;
-import com.mycommerce.client.business.binder.proxy.ProduitProxy;
+import com.mycommerce.client.business.service.ClientService;
 
 @Controller
 public class ClientController {
 
-	private final Random random;
-
-	private ProduitProxy	produitProxy;
-	private CommandeProxy	commandeProxy;
-	private PaiementProxy	paiementProxy;
-
-	public ClientController() {
-
-		this.random = new Random();
-	}
-
 	@Autowired
-	public void setProduitProxy(final ProduitProxy produitProxy) {
+	private ClientService clientService;
 
-		this.produitProxy = produitProxy;
-	}
-
-	@Autowired
-	public void setCommandeProxy(final CommandeProxy commandeProxy) {
-
-		this.commandeProxy = commandeProxy;
-	}
-
-	@Autowired
-	public void setPaiementProxy(final PaiementProxy paiementProxy) {
-
-		this.paiementProxy = paiementProxy;
-	}
-
-	@RequestMapping("")
+	@GetMapping("")
 	public String accueil(final Model model) {
 
-		final List<ProduitBean> produitBeans = this.produitProxy.listeDesProduits();
+		model.addAttribute("pageAcceuilForm", this.clientService.getAllProduits());
 
-		model.addAttribute("produits", produitBeans);
+		final String view = "PageAccueil";
 
-		return new String("PageAccueil");
+		return view;
 	}
 
-	@RequestMapping("/pageProduit/{id}")
+	@GetMapping("/pageProduit/{id}")
 	public String ficheProduit(@PathVariable final Long id, final Model model) {
 
-		final Optional<ProduitBean> produitBean = this.produitProxy.recupererUnProduit(id);
+		model.addAttribute("pageProduitForm", this.clientService.getProduitById(id));
 
-		if (produitBean.isPresent()) {
-			model.addAttribute("produit", produitBean.get());
-		}
+		final String view = "PageProduit";
 
-		return new String("PageProduit");
+		return view;
 	}
 
-	@RequestMapping("/pageCommande/{idProduit}")
+	@GetMapping("/pageCommande/{idProduit}")
 	public String commande(@PathVariable final Long idProduit, final Model model) {
 
+		model.addAttribute("pageCommandeForm", this.clientService.getAllProduits());
+
+		final String view = "PageAccueil";
+
+		return view;
 		final Optional<ProduitBean> produitBean = this.produitProxy.recupererUnProduit(idProduit);
 
 		final CommandeBean commandeBean = new CommandeBean(new Date(), this.quantiteAleatoire(),
@@ -85,15 +58,20 @@ public class ClientController {
 		final ResponseEntity<CommandeBean> commandeAjoutee = this.commandeProxy.ajouterCommande(commandeBean);
 
 		if (commandeAjoutee.getStatusCode().equals(HttpStatus.CREATED)) {
-			model.addAttribute("commande", commandeAjoutee);
+			model.addAttribute("commande", commandeAjoutee.getBody());
 		}
 
-		return new String("PageCommande");
+		return "PageCommande";
 	}
 
-	@RequestMapping("/pagePaiement/{idCommande}")
+	@GetMapping("/pagePaiement/{idCommande}")
 	public String paiement(@PathVariable final Long idCommande, final Model model) {
 
+		model.addAttribute("pageAcceuilForm", this.clientService.getAllProduits());
+
+		final String view = "PageAccueil";
+
+		return view;
 		final Optional<CommandeBean> commandeBean = this.commandeProxy.recupererUneCommande(idCommande);
 
 		final Optional<ProduitBean> produitBean = this.produitProxy
@@ -105,21 +83,11 @@ public class ClientController {
 		final ResponseEntity<PaiementBean> paiementAjoutee = this.paiementProxy.payerUneCommande(paiementBean);
 
 		if (paiementAjoutee.getStatusCode().equals(HttpStatus.CREATED)) {
-			model.addAttribute("etatPayement", true);
+			model.addAttribute("etatPayement", Boolean.TRUE);
 		} else {
-			model.addAttribute("etatPayement", false);
+			model.addAttribute("etatPayement", Boolean.FALSE);
 		}
 
-		return new String("PagePaiement");
-	}
-
-	private Integer quantiteAleatoire() {
-
-		return (int) (this.random.nextInt(10) + 10);
-	}
-
-	private Long numeroCarteAleatoire() {
-
-		return (long) (this.random.nextInt(1000000000) + 1000000000);
+		return "PagePaiement";
 	}
 }

@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.mycommerce.paiement.business.binder.bean.CommandeBean;
 
-@FeignClient(name = "commande")
+@FeignClient(name = "zuul")
 @RibbonClient(name = "commande")
 public interface CommandeProxy {
 
-	@PutMapping(value = "/commande")
+	@PutMapping(value = "/commande/commande")
 	void updateCommande(@RequestBody CommandeBean commandeBean);
 
-	@GetMapping(value = "/commande/{id}")
+	@GetMapping(value = "/commande/commande/{id}")
 	Optional<CommandeBean> recupererUneCommande(@PathVariable(value = "id") Long id);
 }

@@ -12,6 +12,6 @@ import com.mycommerce.client.business.binder.bean.PaiementBean;
 @RibbonClient(name = "paiment")
 public interface PaiementProxy {
 
-	@PostMapping(value = "/paiement")
+	@PostMapping(value = "/paiement/paiement")
 	public ResponseEntity<PaiementBean> payerUneCommande(@RequestBody final PaiementBean paiementBean);
 }

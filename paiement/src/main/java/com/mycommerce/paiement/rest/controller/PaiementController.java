@@ -48,17 +48,17 @@ public class PaiementController {
 	@PostMapping(value = "/paiement")
 	public ResponseEntity<Paiement> payerUneCommande(@RequestBody final Paiement paiement) {
 
-		PaiementController.LOG.info("**** using {}", this.getClass());
+		PaiementController.LOG.info("**** using {}", this.getClass().getSimpleName());
 
 		final Paiement paiementRecupere = this.paiementDao.findByidCommande(paiement.getIdCommande());
 
-		if (paiementRecupere.equals(null)) {
+		if (paiementRecupere != null) {
 			throw new PaiementExistantException("Cette commande est déjà payée");
 		}
 
 		final Paiement paiementAjoutee = this.paiementDao.save(paiement);
 
-		if (paiementAjoutee.equals(null)) {
+		if (paiementAjoutee == null) {
 			throw new PaiementImpossibleException("Erreur, impossible d'établir le paiement, réessayez plus tard");
 		}
 

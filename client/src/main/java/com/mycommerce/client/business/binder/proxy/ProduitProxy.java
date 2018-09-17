@@ -14,9 +14,9 @@ import com.mycommerce.client.business.binder.bean.ProduitBean;
 @RibbonClient(name = "produit")
 public interface ProduitProxy {
 
-	@GetMapping(value = "/produit")
+	@GetMapping(value = "/produit/produit")
 	List<ProduitBean> listeDesProduits();
 
-	@GetMapping(value = "/produit/{id}")
+	@GetMapping(value = "/produit/produit/{id}")
 	Optional<ProduitBean> recupererUnProduit(@PathVariable(value = "id") Long id);
 }
