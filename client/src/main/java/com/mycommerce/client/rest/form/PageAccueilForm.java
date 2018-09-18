@@ -8,6 +8,15 @@ public class PageAccueilForm {
 
 	private List<ProduitBean> produitBeans;
 
+	public PageAccueilForm() {
+
+	}
+
+	public PageAccueilForm(final List<ProduitBean> produitBeans) {
+
+		this.setProduitBeans(produitBeans);
+	}
+
 	public List<ProduitBean> getProduitBeans() {
 
 		return this.produitBeans;

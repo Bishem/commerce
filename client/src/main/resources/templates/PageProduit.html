@@ -11,11 +11,11 @@
 		<h1 class="text-center">Application Mycommerce</h1>
 		<div class="row">
 			<div class="col-md-4 mx-auto mt-5 text-center">
-				<img th:src="${produit.image}" class="card-img-top" />
-				<p th:text="${produit.titre}" class="font-weight-bold"></p>
-				<p th:text="${produit.description}"></p>
+				<img th:src="${pageProduitForm.produitBean.image}" class="card-img-top" />
+				<p th:text="${pageProduitForm.produitBean.titre}" class="font-weight-bold"></p>
+				<p th:text="${pageProduitForm.produitBean.description}"></p>
 				<p>
-					<a th:href="@{|/pageCommande/${produit.id}|}" class="font-weight-bold">COMMANDER</a>
+					<a th:href="@{|/pageCommande/${pageProduitForm.produitBean.id}|}" class="font-weight-bold">COMMANDER</a>
 				</p>
 			</div>
 		</div>
