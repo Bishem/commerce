@@ -22,8 +22,9 @@ public class ClientErrorDecoder implements ErrorDecoder {
 		} else if (500 <= response.status() && response.status() <= 599) {
 
 			return new Proxy5XXException("Internal Server Error");
-		}
+		} else {
 
-		return this.defaultErrorDecoder.decode(methodKey, response);
+			return this.defaultErrorDecoder.decode(methodKey, response);
+		}
 	}
 }

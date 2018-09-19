@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mycommerce.produit.business.configuration.AppPropsConfiguration;
-import com.mycommerce.produit.business.exception.ProduitIntrouvableException;
-import com.mycommerce.produit.persistence.dao.ProduitDao;
+import com.mycommerce.produit.business.service.ProduitService;
 import com.mycommerce.produit.persistence.model.Produit;
 
 @RestController
@@ -20,39 +18,18 @@ public class ProduitController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ProduitController.class);
 
-	ProduitDao				produitDao;
-	AppPropsConfiguration	appProps;
-
-	public ProduitController() {
-
-	}
-
 	@Autowired
-	public void setProduitDao(final ProduitDao produitDao) {
-
-		this.produitDao = produitDao;
-	}
-
-	@Autowired
-	public void setAppProps(final AppPropsConfiguration appProps) {
-
-		this.appProps = appProps;
-	}
+	ProduitService produitService;
 
 	@GetMapping(value = "/produit")
 	public List<Produit> listeDesProduits() {
 
 		ProduitController.LOG.info("**** using {}", this.getClass().getSimpleName());
 
-		final List<Produit> produits = this.produitDao.findAll();
+		final List<Produit> produits = this.produitService.getProduits();
 
-		if (produits.isEmpty()) {
-			throw new ProduitIntrouvableException("Aucun produit n'est disponible à la vente");
-		}
+		return produits;
 
-		final List<Produit> produitsLimites = produits.subList(0, this.appProps.getLimiteDeProduits());
-
-		return produitsLimites;
 	}
 
 	@GetMapping(value = "/produit/{id}")
@@ -60,11 +37,7 @@ public class ProduitController {
 
 		ProduitController.LOG.info("**** using {}", this.getClass().getSimpleName());
 
-		final Optional<Produit> produit = this.produitDao.findById(id);
-
-		if (!produit.isPresent()) {
-			throw new ProduitIntrouvableException("Le produit correspondant à l'id " + id + " n'existe pas");
-		}
+		final Optional<Produit> produit = this.produitService.getProduit(id);
 
 		return produit;
 	}

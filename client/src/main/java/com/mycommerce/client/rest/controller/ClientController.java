@@ -2,7 +2,6 @@ package com.mycommerce.client.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,26 +25,32 @@ public class ClientController {
 	}
 
 	@GetMapping("/pageProduit/{id}")
-	public String ficheProduit(@PathVariable final Long id, final Model model) {
+	public ModelAndView ficheProduit(@PathVariable final Long id) {
 
-		model.addAttribute("pageProduitForm", this.clientService.getProduitById(id));
+		final ModelAndView mav = new ModelAndView("PageProduit");
 
-		return "PageProduit";
+		mav.addObject("produit", this.clientService.getProduitById(id));
+
+		return mav;
 	}
 
 	@GetMapping("/pageCommande/{idProduit}")
-	public String commande(@PathVariable final Long idProduit, final Model model) {
+	public ModelAndView commande(@PathVariable final Long idProduit) {
 
-		model.addAttribute("pageCommandeForm", this.clientService.getNewCommande(idProduit));
+		final ModelAndView mav = new ModelAndView("PageCommande");
 
-		return "PageCommande";
+		mav.addObject("commande", this.clientService.getNewCommande(idProduit));
+
+		return mav;
 	}
 
 	@GetMapping("/pagePaiement/{idCommande}")
-	public String paiement(@PathVariable final Long idCommande, final Model model) {
+	public ModelAndView paiement(@PathVariable final Long idCommande) {
 
-		model.addAttribute("pagePaiementForm", this.clientService.getNewPaiement(idCommande));
+		final ModelAndView mav = new ModelAndView("PagePaiement");
 
-		return "PagePaiement";
+		mav.addObject("etatPayement", this.clientService.getNewPaiement(idCommande));
+
+		return mav;
 	}
 }

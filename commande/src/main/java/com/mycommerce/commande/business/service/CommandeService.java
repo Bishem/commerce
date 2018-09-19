@@ -1,26 +1,14 @@
 package com.mycommerce.commande.business.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.Optional;
 
-import com.mycommerce.commande.business.exception.CommandeNonAjoutableException;
-import com.mycommerce.commande.persistence.dao.CommandeDao;
 import com.mycommerce.commande.persistence.model.Commande;
 
-@Service
-public class CommandeService {
+public interface CommandeService {
 
-	@Autowired
-	CommandeDao commandeDao;
+	public Optional<Commande> getCommande(final Long id);
 
-	public Commande postCommande(final Commande commande) {
+	public Commande postCommande(final Commande commande);
 
-		final Commande nouvelleCommande = this.commandeDao.save(commande);
-
-		if (nouvelleCommande == null) {
-			throw new CommandeNonAjoutableException("Impossible d'ajouter cette commande");
-		}
-
-		return nouvelleCommande;
-	}
+	public Commande putCommande(final Commande commande);
 }
