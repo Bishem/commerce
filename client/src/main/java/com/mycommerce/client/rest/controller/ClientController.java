@@ -17,37 +17,37 @@ public class ClientController {
 	@GetMapping("")
 	public ModelAndView accueil() {
 
-		final ModelAndView mav = new ModelAndView("PageAccueil");
+		final ModelAndView mav = new ModelAndView("accueil");
 
 		mav.addObject("produits", this.clientService.getAllProduits());
 
 		return mav;
 	}
 
-	@GetMapping("/pageProduit/{id}")
+	@GetMapping("/detailler/{id}")
 	public ModelAndView ficheProduit(@PathVariable final Long id) {
 
-		final ModelAndView mav = new ModelAndView("PageProduit");
+		final ModelAndView mav = new ModelAndView("details");
 
 		mav.addObject("produit", this.clientService.getProduitById(id));
 
 		return mav;
 	}
 
-	@GetMapping("/pageCommande/{idProduit}")
+	@GetMapping("/commander/{idProduit}")
 	public ModelAndView commande(@PathVariable final Long idProduit) {
 
-		final ModelAndView mav = new ModelAndView("PageCommande");
+		final ModelAndView mav = new ModelAndView("commande");
 
 		mav.addObject("commande", this.clientService.getNewCommande(idProduit));
 
 		return mav;
 	}
 
-	@GetMapping("/pagePaiement/{idCommande}")
+	@GetMapping("/payer/{idCommande}")
 	public ModelAndView paiement(@PathVariable final Long idCommande) {
 
-		final ModelAndView mav = new ModelAndView("PagePaiement");
+		final ModelAndView mav = new ModelAndView("paiement");
 
 		mav.addObject("etatPayement", this.clientService.getNewPaiement(idCommande));
 

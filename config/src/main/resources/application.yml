@@ -9,4 +9,4 @@ spring:
       enabled: true
       server:
         git:
-          uri: https://github.com/Cao-Lao/mycommerce-config.git
+          uri: https://github.com/Cao-Lao/commerce-configs.git

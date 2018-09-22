@@ -3,20 +3,25 @@ package com.mycommerce.produit.business.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.transaction.Transactional;
 
-import com.mycommerce.produit.business.configuration.AppPropsConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
 import com.mycommerce.produit.business.exception.ProduitIntrouvableException;
 import com.mycommerce.produit.persistence.dao.ProduitDao;
 import com.mycommerce.produit.persistence.model.Produit;
 
+@Service
+@Transactional
 public class ProduitServiceImpl implements ProduitService {
 
 	@Autowired
 	ProduitDao produitDao;
 
-	@Autowired
-	AppPropsConfiguration appProps;
+	@Value(value = "produit.limite")
+	Integer limite;
 
 	@Override
 	public List<Produit> getProduits() {
@@ -27,7 +32,7 @@ public class ProduitServiceImpl implements ProduitService {
 			throw new ProduitIntrouvableException("Aucun produit n'est disponible à la vente");
 		}
 
-		final List<Produit> produitsLimites = produits.subList(0, this.appProps.getLimiteDeProduits());
+		final List<Produit> produitsLimites = produits.subList(0, this.limite);
 
 		return produitsLimites;
 	}

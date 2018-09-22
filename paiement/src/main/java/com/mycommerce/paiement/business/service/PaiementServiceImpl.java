@@ -2,6 +2,8 @@ package com.mycommerce.paiement.business.service;
 
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import com.mycommerce.paiement.persistence.dao.PaiementDao;
 import com.mycommerce.paiement.persistence.model.Paiement;
 
 @Service
+@Transactional
 public class PaiementServiceImpl implements PaiementService {
 
 	@Autowired
@@ -33,9 +36,9 @@ public class PaiementServiceImpl implements PaiementService {
 	}
 
 	private void testerSiDejaPayee(final Paiement paiement) {
-	
+
 		final Paiement paiementRecupere = this.paiementDao.findByidCommande(paiement.getIdCommande());
-	
+
 		if (paiementRecupere != null) {
 			throw new PaiementExistantException("Cette commande est déjà payée");
 		}
