@@ -13,8 +13,8 @@ import com.mycommerce.produit.business.exception.ProduitIntrouvableException;
 import com.mycommerce.produit.persistence.dao.ProduitDao;
 import com.mycommerce.produit.persistence.model.Produit;
 
-@Service
 @Transactional
+@Service
 public class ProduitServiceImpl implements ProduitService {
 
 	@Autowired

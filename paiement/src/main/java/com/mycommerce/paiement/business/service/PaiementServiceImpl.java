@@ -13,8 +13,8 @@ import com.mycommerce.paiement.business.exception.PaiementExistantException;
 import com.mycommerce.paiement.persistence.dao.PaiementDao;
 import com.mycommerce.paiement.persistence.model.Paiement;
 
-@Service
 @Transactional
+@Service
 public class PaiementServiceImpl implements PaiementService {
 
 	@Autowired

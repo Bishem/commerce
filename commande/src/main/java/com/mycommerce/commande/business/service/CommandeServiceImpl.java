@@ -11,8 +11,8 @@ import com.mycommerce.commande.business.exception.CommandeIntrouvableException;
 import com.mycommerce.commande.persistence.dao.CommandeDao;
 import com.mycommerce.commande.persistence.model.Commande;
 
-@Service
 @Transactional
+@Service
 public class CommandeServiceImpl implements CommandeService {
 
 	@Autowired

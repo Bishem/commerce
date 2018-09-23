@@ -1,25 +1,19 @@
 package com.mycommerce.produit.persistence.dao;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.mycommerce.produit.persistence.model.Produit;
 
+@Transactional
 @Component
 public class DbSeeder implements CommandLineRunner {
 
-	private ProduitDao produitDao;
-
-	public DbSeeder() {
-
-	}
-
 	@Autowired
-	public void setProduitDao(final ProduitDao produitDao) {
-
-		this.produitDao = produitDao;
-	}
+	private ProduitDao produitDao;
 
 	@Override
 	public void run(final String... args) throws Exception {

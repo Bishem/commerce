@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.mycommerce.client.business.binder.bean.PaiementBean;
 
-@FeignClient(name = "zuul")
 @RibbonClient(name = "paiment")
+@FeignClient(name = "zuul")
 public interface PaiementProxy {
 
 	@PostMapping(value = "/paiement/paiement")

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.mycommerce.client.business.binder.bean.CommandeBean;
 
-@FeignClient(name = "zuul")
 @RibbonClient(name = "commande")
+@FeignClient(name = "zuul")
 public interface CommandeProxy {
 
 	@PostMapping(value = "/commande/commande")
