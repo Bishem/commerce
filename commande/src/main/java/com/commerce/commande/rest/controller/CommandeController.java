@@ -28,17 +28,25 @@ public class CommandeController {
 	@GetMapping(value = "/commande/{id}")
 	public Optional<Commande> recupererUneCommande(@PathVariable final Long id) {
 
-		CommandeController.LOG.info("**** using {}", this.getClass().getSimpleName());
+		CommandeController.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
 
-		return this.commandeService.getCommande(id);
+		final Optional<Commande> commandeRecuperee = this.commandeService.getCommande(id);
+
+		CommandeController.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
+
+		return commandeRecuperee;
 	}
 
 	@PostMapping(value = "/commande")
 	public ResponseEntity<Commande> ajouterCommande(@RequestBody final Commande commande) {
 
-		CommandeController.LOG.info("**** using {}", this.getClass().getSimpleName());
+		CommandeController.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
 
-		return new ResponseEntity<>(this.commandeService.postCommande(commande), HttpStatus.CREATED);
+		final ResponseEntity<Commande> commandeAjoutee = new ResponseEntity<>(this.commandeService.postCommande(commande), HttpStatus.CREATED);
+
+		CommandeController.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
+
+		return commandeAjoutee;
 	}
 
 	/*
@@ -50,8 +58,12 @@ public class CommandeController {
 	@PutMapping(value = "/commande")
 	public ResponseEntity<Commande> updateCommande(@RequestBody final Commande commande) {
 
-		CommandeController.LOG.info("**** using {}", this.getClass().getSimpleName());
+		CommandeController.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
 
-		return new ResponseEntity<>(this.commandeService.putCommande(commande), HttpStatus.CREATED);
+		final ResponseEntity<Commande> commandeUpdated = new ResponseEntity<>(this.commandeService.putCommande(commande), HttpStatus.CREATED);
+
+		CommandeController.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
+
+		return commandeUpdated;
 	}
 }

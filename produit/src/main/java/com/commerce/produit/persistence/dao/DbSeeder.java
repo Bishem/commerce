@@ -18,27 +18,27 @@ public class DbSeeder implements CommandLineRunner {
 	@Override
 	public void run(final String... args) throws Exception {
 
-		this.produitDao.save(new Produit(Long.valueOf(0), "Bougie fonctionnant au feu",
+		this.produitDao.save(new Produit("Bougie fonctionnant au feu",
 				"bougie qui fonctionne comme une ampoule mais sans électricité !",
 				"https://s3.eu-west-3.amazonaws.com/oc-images-cours/bougies.jpg", 22.0));
 		this.produitDao.save(
-				new Produit(Long.valueOf(1), "Chaise pour s'assoir", "Chaise rare avec non pas 1 ni 2 mais 3 pieds",
+				new Produit("Chaise pour s'assoir", "Chaise rare avec non pas 1 ni 2 mais 3 pieds",
 						"https://s3.eu-west-3.amazonaws.com/oc-images-cours/chaise.jpg", 95.0));
-		this.produitDao.save(new Produit(Long.valueOf(2), "Cheval pour nains",
+		this.produitDao.save(new Produit("Cheval pour nains",
 				"Ce cheval ne portera certainement pas blanche neige, mais sans problème les nains",
 				"https://s3.eu-west-3.amazonaws.com/oc-images-cours/cheval.jpg", 360.0));
-		this.produitDao.save(new Produit(Long.valueOf(3), "Coq of steel, le superman des volailles",
+		this.produitDao.save(new Produit("Coq of steel, le superman des volailles",
 				"Ne passe pas au four", "https://s3.eu-west-3.amazonaws.com/oc-images-cours/coq.jpg", 620.0));
-		this.produitDao.save(new Produit(Long.valueOf(4), "Flacon à frotter avec un génie dedans",
+		this.produitDao.save(new Produit("Flacon à frotter avec un génie dedans",
 				"Vous donne droit à l'équivalent de 3/0 voeux",
 				"https://s3.eu-west-3.amazonaws.com/oc-images-cours/flacon.jpg", 1200.0));
-		this.produitDao.save(new Produit(Long.valueOf(5), "Horloge quantique",
+		this.produitDao.save(new Produit("Horloge quantique",
 				"Donne l'heure, les minutes et même les secondes. Ne fait pas de café",
 				"https://s3.eu-west-3.amazonaws.com/oc-images-cours/horloge.jpg", 180.0));
-		this.produitDao.save(new Produit(Long.valueOf(6), "Table d'opération pour Hamsters",
+		this.produitDao.save(new Produit("Table d'opération pour Hamsters",
 				"Pour réaliser vos opérations chirugicales sur votre Hamster!",
 				"https://s3.eu-west-3.amazonaws.com/oc-images-cours/table.jpg", 210.0));
-		this.produitDao.save(new Produit(Long.valueOf(7), "Vase ayant appartenu a Zeus", "Risque de choc électrique",
+		this.produitDao.save(new Produit("Vase ayant appartenu a Zeus", "Risque de choc électrique",
 				"https://s3.eu-west-3.amazonaws.com/oc-images-cours/vase.jpg", 730.0));
 	}
 
