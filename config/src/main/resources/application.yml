@@ -10,3 +10,24 @@ spring:
       server:
         git:
           uri: git@github.com:Bishem/commerce-configs.git
+          ignore-local-ssh-settings: true
+          clone-on-start: true
+          force-pull: true
+          host-key-algorithm: ssh-rsa
+          host-key: AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
+          private-key: |
+                        -----BEGIN RSA PRIVATE KEY-----
+                        MIICXQIBAAKBgQCkjNraCVZ7EL5LkzU/VBIFEgJNjSxnQLAjwj5IMXRCMgrn8Ut0
+                        FNIfDd/uxrcyV/rRz2tOb/947anClmh70XT0N16UVmEAwv+vJL4RTCdi3fA4q6Ib
+                        jJTE4tJ5Rc8kHUp01Z0qh46T0CUMF1UXMWAZi/170OqZepQimLbLYdqCKQIDAQAB
+                        AoGAKj06BJQ3Ddorbwz3syzqf0CzNKMTjeGuFU/MWw3O0Rs1b3qiKscZdP1DyXBb
+                        IGIzMV50JitbwfgIBrpDUd1fjtO0U3i7DurAydTDx7WiCSrBy4dOc14jFE8HHHs7
+                        zlHJOD77GPzNO4OUTRPaJ4dNZZ+isekIqQaLNfZIL3W1x40CQQDOUHsgLPoR4yIv
+                        rOl1rjSITlwpmC9NvIdQxy2dPIo0PfGCBsdx7Gu3j03SyxyyVFz/hu8V5LVnI4sZ
+                        UOZaOl8vAkEAzC2QqpeNacMj61lemTKD29GUDpnWYnI/ZRnleCWfOjWlD2THfVIM
+                        U9A2krTew3LVqBumEkkLNi1ek9ztkXmeJwJACj2abvVskDi6+KzXhbzY5K8nCfWA
+                        25XxDYRlcjmQDpnIhBC8E56NljXpwf3M9dkUKKbU9Tw9+NmdzOrkFDRzhwJBAIMK
+                        F1e1Dng7Wnk4kUMHLaNNvZUlXHcwVcmANkrG8os8VKQtjO68UtcTwYKkfHe54rAS
+                        lqITqRNrSNDjMMF16W8CQQCantVMLpx82/ubDGgqNnwpsF0giukXAy4wt5DbXgj3
+                        U6QBBmEZCxPofFsiTDhbplxrb1Qd9Qmga8HV78KqjNWB
+                        -----END RSA PRIVATE KEY-----
