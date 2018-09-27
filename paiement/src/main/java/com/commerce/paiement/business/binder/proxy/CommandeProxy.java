@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.commerce.paiement.business.binder.bean.CommandeBean;
 
 //@RibbonClient(name = "commande")
-@FeignClient(name = "zuul", url = "localhost:9004")
+@FeignClient(name = "commande", url = "localhost:9002")
 public interface CommandeProxy {
 
-	@PutMapping(value = "/commande/commande")
+//	@PutMapping(value = "/commande/commande")
+	@PutMapping(value = "/commande")
 	public ResponseEntity<CommandeBean> updateCommande(@RequestBody final CommandeBean commandeBean);
 
-	@GetMapping(value = "/commande/commande/{id}")
+//	@GetMapping(value = "/commande/commande/{id}")
+	@GetMapping(value = "/commande/{id}")
 	public Optional<CommandeBean> recupererUneCommande(@PathVariable(value = "id") final Long id);
 }
