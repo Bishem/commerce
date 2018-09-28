@@ -33,9 +33,11 @@ public class ProduitController {
 	@GetMapping(value = "/produit")
 	public List<Produit> listeDesProduits() {
 
-		ProduitController.LOG.info("**** using {}", this.getClass().getSimpleName());
+		ProduitController.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
 
 		final List<Produit> produits = this.produitService.getProduits();
+
+		ProduitController.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
 
 		return produits;
 	}
@@ -43,9 +45,11 @@ public class ProduitController {
 	@GetMapping(value = "/produit/{id}")
 	public Optional<Produit> recupererUnProduit(@PathVariable final Long id) {
 
-		ProduitController.LOG.info("**** using {}", this.getClass().getSimpleName());
+		ProduitController.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
 
 		final Optional<Produit> produit = this.produitService.getProduit(id);
+
+		ProduitController.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
 
 		return produit;
 	}

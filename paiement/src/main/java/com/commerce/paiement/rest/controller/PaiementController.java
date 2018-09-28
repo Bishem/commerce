@@ -17,8 +17,17 @@ public class PaiementController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(PaiementController.class);
 
-	@Autowired
 	private PaiementService paiementService;
+
+	public PaiementController() {
+
+	}
+
+	@Autowired
+	public PaiementController(final PaiementService paiementService) {
+
+		this.paiementService = paiementService;
+	}
 
 	/*
 	 * Opération pour enregistrer un paiement et notifier le microservice commandes pour mettre à jour le statut de la commande en question
@@ -26,8 +35,12 @@ public class PaiementController {
 	@PostMapping(value = "/paiement")
 	public ResponseEntity<Paiement> payerUneCommande(@RequestBody final Paiement paiement) {
 
-		PaiementController.LOG.info("**** using {}", this.getClass().getSimpleName());
+		PaiementController.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
 
-		return new ResponseEntity<>(this.paiementService.postPaiement(paiement), HttpStatus.CREATED);
+		final ResponseEntity<Paiement> paiementAjoutee = new ResponseEntity<>(this.paiementService.postPaiement(paiement), HttpStatus.CREATED);
+
+		PaiementController.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
+
+		return paiementAjoutee;
 	}
 }

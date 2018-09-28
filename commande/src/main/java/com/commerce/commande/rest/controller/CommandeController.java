@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,12 +19,22 @@ import com.commerce.commande.business.service.CommandeService;
 import com.commerce.commande.persistence.model.Commande;
 
 @RestController
+@RefreshScope
 public class CommandeController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(CommandeController.class);
 
-	@Autowired
 	private CommandeService commandeService;
+
+	public CommandeController() {
+
+	}
+
+	@Autowired
+	public CommandeController(final CommandeService commandeService) {
+
+		this.commandeService = commandeService;
+	}
 
 	@GetMapping(value = "/commande/{id}")
 	public Optional<Commande> recupererUneCommande(@PathVariable final Long id) {
