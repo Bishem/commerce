@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.commerce.commande.business.service.CommandeService;
 import com.commerce.commande.persistence.model.Commande;
 
-@RestController
 @RefreshScope
+@RestController
 public class CommandeController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(CommandeController.class);

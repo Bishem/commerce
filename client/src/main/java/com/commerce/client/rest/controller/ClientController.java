@@ -9,8 +9,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.commerce.client.business.service.ClientService;
 
-@Controller
 @RefreshScope
+@Controller
 public class ClientController {
 
 	private ClientService clientService;

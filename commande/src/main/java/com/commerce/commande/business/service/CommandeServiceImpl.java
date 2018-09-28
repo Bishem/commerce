@@ -19,8 +19,17 @@ public class CommandeServiceImpl implements CommandeService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(CommandeServiceImpl.class);
 
-	@Autowired
 	private CommandeDao commandeDao;
+
+	public CommandeServiceImpl() {
+
+	}
+
+	@Autowired
+	public CommandeServiceImpl(final CommandeDao commandeDao) {
+
+		this.commandeDao = commandeDao;
+	}
 
 	@Override
 	public Optional<Commande> getCommande(final Long id) {

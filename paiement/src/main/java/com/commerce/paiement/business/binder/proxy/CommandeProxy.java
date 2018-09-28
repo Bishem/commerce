@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.commerce.paiement.business.binder.bean.CommandeBean;
 
 //@RibbonClient(name = "commande")
+//@FeignClient(name = "commande")
 @FeignClient(name = "commande", url = "localhost:9002")
 public interface CommandeProxy {
 

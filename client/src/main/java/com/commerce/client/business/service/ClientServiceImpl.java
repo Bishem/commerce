@@ -20,20 +20,22 @@ import com.commerce.client.business.binder.proxy.ProduitProxy;
 @Service
 public class ClientServiceImpl implements ClientService {
 
-	private final Random random;
+	private final Random random = new Random();
 
-	@Autowired
-	private ProduitProxy produitProxy;
-
-	@Autowired
-	private CommandeProxy commandeProxy;
-
-	@Autowired
-	private PaiementProxy paiementProxy;
+	private ProduitProxy	produitProxy;
+	private CommandeProxy	commandeProxy;
+	private PaiementProxy	paiementProxy;
 
 	public ClientServiceImpl() {
 
-		this.random = new Random();
+	}
+
+	@Autowired
+	public ClientServiceImpl(final ProduitProxy produitProxy, final CommandeProxy commandeProxy, final PaiementProxy paiementProxy) {
+
+		this.produitProxy = produitProxy;
+		this.commandeProxy = commandeProxy;
+		this.paiementProxy = paiementProxy;
 	}
 
 	@Override
