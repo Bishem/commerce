@@ -13,5 +13,5 @@ import com.commerce.client.business.binder.bean.PaiementBean;
 public interface PaiementProxy {
 
 	@PostMapping(value = "/paiement/paiement")
-	public ResponseEntity<PaiementBean> payerUneCommande(@RequestBody final PaiementBean paiementBean);
+	ResponseEntity<PaiementBean> payerUneCommande(@RequestBody final PaiementBean paiementBean);
 }

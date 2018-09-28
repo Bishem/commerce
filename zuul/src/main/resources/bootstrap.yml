@@ -1,8 +1,7 @@
 spring:
   application:
-    name: zuul
+    name: "zuul"
   cloud:
     config:
-      enabled: true
-      uri: http://localhost:9101
+      uri: "http://localhost:9101"
       fail-fast: true

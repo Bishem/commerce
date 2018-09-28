@@ -1,22 +1,22 @@
 server:
   port: 9101
-  
+
 spring:
   application:
-    name: config
+    name: "config"
   cloud:
     config:
       enabled: true
       server:
         git:
-          uri: git@github.com:Bishem/commerce-configs.git
+          uri: "git@github.com:Bishem/commerce-configs.git"
           ignore-local-ssh-settings: true
           clone-on-start: true
           force-pull: true
-          host-key-algorithm: ssh-rsa
-          host-key: AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
+          host-key-algorithm: "ssh-rsa"
+          host-key: "AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=="
           private-key: |
-                        -----BEGIN RSA PRIVATE KEY-----
+                        "-----BEGIN RSA PRIVATE KEY-----
                         MIIJKQIBAAKCAgEA1yMeGwV+oyVPXnbWEqP2DXUmeRvuULM20U9K/0W3/6LPaRhj
                         QburvP0ijNEnRX2AEaJ0nGlZh1rtIkP8RQlH1gAWFnQFYegQIwkT/vN28EVFcsiy
                         6v84tOjiLDUToU+yVuGhwQJ9HbZHuQPWnx0D48/vjfGDmrCZLZnm9dW8iRr9PJM3
@@ -66,5 +66,5 @@ spring:
                         Y9V8fPrYXHuxMMiiFipy+wG8JiOrV3UFBXqqTPYRDAtTOw7AP0J+C49s7LC+Kcta
                         iz15oCaHhmT9fiO//HXZfnQjy4kxMW6GHFSdUc9dW0BHwZPEQ1N1ut6Fw2sfh4x6
                         0qkKkWNEeP6btEFTZj4DZhsv8VJmbqOuOEqk/k4xR3lTNFMD376O3JfLQH/3
-                        -----END RSA PRIVATE KEY-----
+                        -----END RSA PRIVATE KEY-----"
 

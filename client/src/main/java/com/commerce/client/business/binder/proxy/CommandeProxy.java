@@ -17,8 +17,8 @@ import com.commerce.client.business.binder.bean.CommandeBean;
 public interface CommandeProxy {
 
 	@PostMapping(value = "/commande/commande")
-	public ResponseEntity<CommandeBean> ajouterCommande(@RequestBody final CommandeBean commandeBean);
+	ResponseEntity<CommandeBean> ajouterCommande(@RequestBody final CommandeBean commandeBean);
 
 	@GetMapping(value = "/commande/commande/{id}")
-	public Optional<CommandeBean> recupererUneCommande(@PathVariable(value = "id") final Long id);
+	Optional<CommandeBean> recupererUneCommande(@PathVariable(value = "id") final Long id);
 }

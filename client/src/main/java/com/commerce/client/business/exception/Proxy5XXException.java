@@ -12,5 +12,4 @@ public class Proxy5XXException extends RuntimeException {
 
 		super(message);
 	}
-
 }

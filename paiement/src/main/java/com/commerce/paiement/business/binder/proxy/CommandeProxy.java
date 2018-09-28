@@ -17,9 +17,9 @@ public interface CommandeProxy {
 
 //	@PutMapping(value = "/commande/commande")
 	@PutMapping(value = "/commande")
-	public ResponseEntity<CommandeBean> updateCommande(@RequestBody final CommandeBean commandeBean);
+	ResponseEntity<CommandeBean> updateCommande(@RequestBody final CommandeBean commandeBean);
 
 //	@GetMapping(value = "/commande/commande/{id}")
 	@GetMapping(value = "/commande/{id}")
-	public Optional<CommandeBean> recupererUneCommande(@PathVariable(value = "id") final Long id);
+	Optional<CommandeBean> recupererUneCommande(@PathVariable(value = "id") final Long id);
 }

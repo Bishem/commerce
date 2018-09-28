@@ -18,8 +18,17 @@ public class ProduitController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ProduitController.class);
 
-	@Autowired
 	ProduitService produitService;
+
+	public ProduitController() {
+
+	}
+
+	@Autowired
+	public ProduitController(final ProduitService produitService) {
+
+		this.produitService = produitService;
+	}
 
 	@GetMapping(value = "/produit")
 	public List<Produit> listeDesProduits() {
@@ -29,7 +38,6 @@ public class ProduitController {
 		final List<Produit> produits = this.produitService.getProduits();
 
 		return produits;
-
 	}
 
 	@GetMapping(value = "/produit/{id}")

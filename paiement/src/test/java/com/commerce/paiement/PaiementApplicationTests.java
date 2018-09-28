@@ -11,6 +11,6 @@ public class PaiementApplicationTests {
 
 	@Test
 	public void contextLoads() {
-	}
 
+	}
 }
