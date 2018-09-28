@@ -1,7 +1,6 @@
 package com.commerce.client.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,7 +8,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.commerce.client.business.service.ClientService;
 
-@RefreshScope
 @Controller
 public class ClientController {
 
