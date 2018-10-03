@@ -17,36 +17,45 @@ import com.commerce.produit.persistence.model.Produit;
 @Service
 public class ProduitServiceImpl implements ProduitService {
 
-	@Autowired
-	ProduitDao produitDao;
-
 	@Value(value = "${produit.limite}")
 	int limite;
+
+	ProduitDao produitDao;
+
+	@Autowired
+	public void setProduitDao(final ProduitDao produitDao) {
+
+		this.produitDao = produitDao;
+	}
 
 	@Override
 	public List<Produit> getProduits() {
 
-		final List<Produit> produits = this.produitDao.findAll();
+		final List<Produit> produitsFound = this.produitDao.findAll();
 
-		if (produits.isEmpty()) {
+		if (produitsFound.isEmpty()) {
+
 			throw new ProduitIntrouvableException("Aucun produit n'est disponible à la vente");
+		} else {
+
+			final List<Produit> produitsLimites = produitsFound.subList(0, this.limite);
+
+			return produitsLimites;
 		}
-
-		final List<Produit> produitsLimites = produits.subList(0, this.limite);
-
-		return produitsLimites;
 	}
 
 	@Override
-	public Optional<Produit> getProduit(final Long id) {
+	public Produit getProduit(final Long id) {
 
-		final Optional<Produit> produit = this.produitDao.findById(id);
+		final Optional<Produit> produitFound = this.produitDao.findById(id);
 
-		if (!produit.isPresent()) {
+		if (!produitFound.isPresent()) {
+
 			throw new ProduitIntrouvableException("Le produit correspondant à l'id " + id + " n'existe pas");
-		}
+		} else {
 
-		return produit;
+			return produitFound.get();
+		}
 	}
 
 }

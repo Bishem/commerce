@@ -4,14 +4,13 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Commande {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue
 	private Long	id;
 	private Date	date;
 	private Integer	quantite;
@@ -23,10 +22,11 @@ public class Commande {
 
 	}
 
-	public Commande(final Date date, final Integer quantite, final Long idProduit) {
+	public Commande(final Date date, final Integer quantite, final Boolean estPayee, final Long idProduit) {
 
 		this.date = date;
 		this.quantite = quantite;
+		this.estPayee = estPayee;
 		this.idProduit = idProduit;
 	}
 

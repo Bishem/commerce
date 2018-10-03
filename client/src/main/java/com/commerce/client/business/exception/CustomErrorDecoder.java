@@ -1,30 +1,53 @@
 package com.commerce.client.business.exception;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 
 import feign.Response;
+import feign.Util;
 import feign.codec.ErrorDecoder;
 
 @Component
-public class ClientErrorDecoder implements ErrorDecoder {
+public class CustomErrorDecoder implements ErrorDecoder {
 
 	private final ErrorDecoder defaultErrorDecoder = new Default();
 
 	@Override
 	public Exception decode(final String methodKey, final Response response) {
 
-		if (300 <= response.status() && response.status() <= 399) {
+		try {
 
-			return new Proxy3XXException("Multiple Choices");
-		} else if (400 <= response.status() && response.status() <= 499) {
+			final HttpHeaders responseHeaders = new HttpHeaders();
 
-			return new Proxy4XXException("Bad Request");
-		} else if (500 <= response.status() && response.status() <= 599) {
+			response.headers().entrySet().stream().forEach(entry -> responseHeaders.put(entry.getKey(), new ArrayList<>(entry.getValue())));
 
-			return new Proxy5XXException("Internal Server Error");
-		} else {
+			final HttpStatus statusCode = HttpStatus.valueOf(response.status());
 
-			return this.defaultErrorDecoder.decode(methodKey, response);
+			final String statusText = response.reason();
+
+			byte[] responseBody;
+
+			responseBody = Util.toByteArray(response.body().asInputStream());
+
+			if (response.status() >= 400 && response.status() <= 499) {
+
+				return new HttpClientErrorException(statusCode, statusText, responseHeaders, responseBody, null);
+			} else if (response.status() >= 500 && response.status() <= 599) {
+
+				return new HttpServerErrorException(statusCode, statusText, responseHeaders, responseBody, null);
+			}
+
+		} catch (final IOException e) {
+
+			throw new RuntimeException("Failed to process response body", e);
 		}
+
+		return this.defaultErrorDecoder.decode(methodKey, response);
 	}
 }

@@ -1,7 +1,5 @@
 package com.commerce.commande.rest.controller;
 
-import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,22 +22,18 @@ public class CommandeController {
 
 	private CommandeService commandeService;
 
-	public CommandeController() {
-
-	}
-
 	@Autowired
-	public CommandeController(final CommandeService commandeService) {
+	public void setCommandeService(final CommandeService commandeService) {
 
 		this.commandeService = commandeService;
 	}
 
 	@GetMapping(value = "/commande/{id}")
-	public Optional<Commande> recupererUneCommande(@PathVariable final Long id) {
+	public Commande recupererUneCommande(@PathVariable final Long id) {
 
 		CommandeController.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
 
-		final Optional<Commande> commandeRecuperee = this.commandeService.getCommande(id);
+		final Commande commandeRecuperee = this.commandeService.getCommande(id);
 
 		CommandeController.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
 

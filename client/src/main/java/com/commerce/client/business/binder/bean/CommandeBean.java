@@ -15,10 +15,11 @@ public class CommandeBean {
 
 	}
 
-	public CommandeBean(final Date date, final Integer quantite, final Long idProduit) {
+	public CommandeBean(final Date date, final Integer quantite, final Boolean estPayee, final Long idProduit) {
 
 		this.date = date;
 		this.quantite = quantite;
+		this.estPayee = estPayee;
 		this.idProduit = idProduit;
 	}
 

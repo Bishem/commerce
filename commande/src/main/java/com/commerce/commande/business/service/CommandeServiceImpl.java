@@ -21,30 +21,27 @@ public class CommandeServiceImpl implements CommandeService {
 
 	private CommandeDao commandeDao;
 
-	public CommandeServiceImpl() {
-
-	}
-
 	@Autowired
-	public CommandeServiceImpl(final CommandeDao commandeDao) {
+	public void setCommandeDao(final CommandeDao commandeDao) {
 
 		this.commandeDao = commandeDao;
 	}
 
 	@Override
-	public Optional<Commande> getCommande(final Long id) {
+	public Commande getCommande(final Long id) {
 
 		CommandeServiceImpl.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
 
-		final Optional<Commande> commandeCherchee = this.commandeDao.findById(id);
+		final Optional<Commande> commandeFound = this.commandeDao.findById(id);
 
-		if (!commandeCherchee.isPresent()) {
+		if (!commandeFound.isPresent()) {
+
 			throw new CommandeIntrouvableException("Cette commande n'existe pas");
 		} else {
 
 			CommandeServiceImpl.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
 
-			return commandeCherchee;
+			return commandeFound.get();
 		}
 	}
 

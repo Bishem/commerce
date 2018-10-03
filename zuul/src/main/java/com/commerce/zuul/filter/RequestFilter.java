@@ -11,9 +11,9 @@ import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 
 @Component
-public class LogFilter extends ZuulFilter {
+public class RequestFilter extends ZuulFilter {
 
-	private static final Logger LOG = LoggerFactory.getLogger(LogFilter.class);
+	private static final Logger LOG = LoggerFactory.getLogger(RequestFilter.class);
 
 	@Override
 	public boolean shouldFilter() {
@@ -26,7 +26,7 @@ public class LogFilter extends ZuulFilter {
 
 		final HttpServletRequest request = RequestContext.getCurrentContext().getRequest();
 
-		LogFilter.LOG.info("**** Requête interceptée ! L'URL est : {}", request.getRequestURL());
+		RequestFilter.LOG.info("**** Requête interceptée ! L'URL est : {}", request.getRequestURL());
 
 		return null;
 	}

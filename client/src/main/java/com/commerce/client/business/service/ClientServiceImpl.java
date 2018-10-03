@@ -2,9 +2,10 @@ package com.commerce.client.business.service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,59 +21,93 @@ import com.commerce.client.business.binder.proxy.ProduitProxy;
 @Service
 public class ClientServiceImpl implements ClientService {
 
+	private static final Logger LOG = LoggerFactory.getLogger(ClientServiceImpl.class);
+
 	private final Random random = new Random();
 
 	private ProduitProxy	produitProxy;
 	private CommandeProxy	commandeProxy;
 	private PaiementProxy	paiementProxy;
 
-	public ClientServiceImpl() {
+	@Autowired
+	public void setProduitProxy(final ProduitProxy produitProxy) {
 
+		this.produitProxy = produitProxy;
 	}
 
 	@Autowired
-	public ClientServiceImpl(final ProduitProxy produitProxy, final CommandeProxy commandeProxy, final PaiementProxy paiementProxy) {
+	public void setCommandeProxy(final CommandeProxy commandeProxy) {
 
-		this.produitProxy = produitProxy;
 		this.commandeProxy = commandeProxy;
+	}
+
+	@Autowired
+	public void setPaiementProxy(final PaiementProxy paiementProxy) {
+
 		this.paiementProxy = paiementProxy;
 	}
 
 	@Override
 	public List<ProduitBean> getAllProduits() {
 
-		return this.produitProxy.listeDesProduits();
+		ClientServiceImpl.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
+
+		final List<ProduitBean> produitsTrouvees = this.produitProxy.listeDesProduits();
+
+		ClientServiceImpl.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
+
+		return produitsTrouvees;
 	}
 
 	@Override
 	public ProduitBean getProduitById(final Long id) {
 
-		return this.produitProxy.recupererUnProduit(id).get();
+		ClientServiceImpl.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
+
+		final ProduitBean produitTrouvee = this.produitProxy.recupererUnProduit(id);
+
+		ClientServiceImpl.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
+
+		return produitTrouvee;
 	}
 
 	@Override
 	public CommandeBean getNewCommande(final Long idProduit) {
 
-		return this.commandeProxy.ajouterCommande(
-				new CommandeBean(
-						new Date(),
-						this.quantiteAleatoire(),
-						idProduit))
-				.getBody();
+		ClientServiceImpl.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
+
+		final CommandeBean commande = new CommandeBean(new Date(), this.quantiteAleatoire(), Boolean.FALSE, idProduit);
+		final ResponseEntity<CommandeBean> commandeBean = this.commandeProxy.ajouterCommande(commande);
+		final CommandeBean commandeAjoutee = commandeBean.getBody();
+
+		ClientServiceImpl.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
+
+		return commandeAjoutee;
 	}
 
 	@Override
 	public Boolean getNewPaiement(final Long idCommande) {
 
-		final Optional<CommandeBean> commandeBean = this.commandeProxy.recupererUneCommande(idCommande);
+		ClientServiceImpl.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
 
-		final Optional<ProduitBean> produitBean = this.produitProxy.recupererUnProduit(commandeBean.get().getIdProduit());
+		final CommandeBean commandeBean = this.commandeProxy.recupererUneCommande(idCommande);
 
-		final ResponseEntity<PaiementBean> paiementAjoutee = this.paiementProxy.payerUneCommande(
-				new PaiementBean(
-						this.numeroCarteAleatoire(),
-						produitBean.get().getPrix() * commandeBean.get().getQuantite(),
-						idCommande));
+		final ProduitBean produitBean = this.produitProxy.recupererUnProduit(commandeBean.getIdProduit());
+
+		final Long numeroCarte = this.numeroCarteAleatoire();
+		final double quantite = produitBean.getPrix() * commandeBean.getQuantite();
+		final PaiementBean paiement = new PaiementBean(numeroCarte, quantite, idCommande);
+		final ResponseEntity<PaiementBean> paiementBean = this.paiementProxy.payerUneCommande(paiement);
+		final ResponseEntity<PaiementBean> paiementAjoutee = paiementBean;
+
+		final Boolean etatPayement = this.getEtatPayement(paiementAjoutee);
+
+		ClientServiceImpl.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
+
+		return etatPayement;
+	}
+
+	private Boolean getEtatPayement(final ResponseEntity<PaiementBean> paiementAjoutee) {
 
 		if (paiementAjoutee.getStatusCode().equals(HttpStatus.CREATED)) {
 			return Boolean.TRUE;

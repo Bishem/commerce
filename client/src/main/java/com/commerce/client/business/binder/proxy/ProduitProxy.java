@@ -1,7 +1,6 @@
 package com.commerce.client.business.binder.proxy;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -18,5 +17,5 @@ public interface ProduitProxy {
 	List<ProduitBean> listeDesProduits();
 
 	@GetMapping(value = "/produit/produit/{id}")
-	Optional<ProduitBean> recupererUnProduit(@PathVariable(value = "id") Long id);
+	ProduitBean recupererUnProduit(@PathVariable(value = "id") Long id);
 }

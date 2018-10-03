@@ -19,12 +19,8 @@ public class PaiementController {
 
 	private PaiementService paiementService;
 
-	public PaiementController() {
-
-	}
-
 	@Autowired
-	public PaiementController(final PaiementService paiementService) {
+	public void setPaiementService(final PaiementService paiementService) {
 
 		this.paiementService = paiementService;
 	}
