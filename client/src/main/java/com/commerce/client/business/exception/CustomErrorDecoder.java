@@ -1,17 +1,16 @@
 package com.commerce.client.business.exception;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
+import feign.Response;
+import feign.Util;
+import feign.codec.ErrorDecoder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 
-import feign.Response;
-import feign.Util;
-import feign.codec.ErrorDecoder;
+import java.io.IOException;
+import java.util.ArrayList;
 
 @Component
 public class CustomErrorDecoder implements ErrorDecoder {

@@ -33,7 +33,7 @@ public class PaiementController {
 
 		PaiementController.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
 
-		final ResponseEntity<Paiement> paiementAjoutee = new ResponseEntity<>(this.paiementService.postPaiement(paiement), HttpStatus.CREATED);
+		final ResponseEntity<Paiement> paiementAjoutee = new ResponseEntity<Paiement>(this.paiementService.postPaiement(paiement), HttpStatus.CREATED);
 
 		PaiementController.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
 
