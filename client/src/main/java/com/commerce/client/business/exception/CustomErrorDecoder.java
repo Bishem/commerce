@@ -15,38 +15,38 @@ import java.util.ArrayList;
 @Component
 public class CustomErrorDecoder implements ErrorDecoder {
 
-	private final ErrorDecoder defaultErrorDecoder = new Default();
+    private final ErrorDecoder defaultErrorDecoder = new Default();
 
-	@Override
-	public Exception decode(final String methodKey, final Response response) {
+    @Override
+    public Exception decode(final String methodKey, final Response response) {
 
-		try {
+        try {
 
-			final HttpHeaders responseHeaders = new HttpHeaders();
+            final HttpHeaders responseHeaders = new HttpHeaders();
 
-			response.headers().entrySet().stream().forEach(entry -> responseHeaders.put(entry.getKey(), new ArrayList<>(entry.getValue())));
+            response.headers().entrySet().stream().forEach(entry -> responseHeaders.put(entry.getKey(), new ArrayList<>(entry.getValue())));
 
-			final HttpStatus statusCode = HttpStatus.valueOf(response.status());
+            final HttpStatus statusCode = HttpStatus.valueOf(response.status());
 
-			final String statusText = response.reason();
+            final String statusText = response.reason();
 
-			byte[] responseBody;
+            byte[] responseBody;
 
-			responseBody = Util.toByteArray(response.body().asInputStream());
+            responseBody = Util.toByteArray(response.body().asInputStream());
 
-			if (response.status() >= 400 && response.status() <= 499) {
+            if (response.status() >= 400 && response.status() <= 499) {
 
-				return new HttpClientErrorException(statusCode, statusText, responseHeaders, responseBody, null);
-			} else if (response.status() >= 500 && response.status() <= 599) {
+                return new HttpClientErrorException(statusCode, statusText, responseHeaders, responseBody, null);
+            } else if (response.status() >= 500 && response.status() <= 599) {
 
-				return new HttpServerErrorException(statusCode, statusText, responseHeaders, responseBody, null);
-			}
+                return new HttpServerErrorException(statusCode, statusText, responseHeaders, responseBody, null);
+            }
 
-		} catch (final IOException e) {
+        } catch (final IOException e) {
 
-			throw new RuntimeException("Failed to process response body", e);
-		}
+            throw new RuntimeException("Failed to process response body", e);
+        }
 
-		return this.defaultErrorDecoder.decode(methodKey, response);
-	}
+        return this.defaultErrorDecoder.decode(methodKey, response);
+    }
 }

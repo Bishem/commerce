@@ -1,20 +1,16 @@
 package com.commerce.commande.rest.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.commerce.commande.business.service.CommandeService;
+import com.commerce.commande.persistence.model.Commande;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.commerce.commande.business.service.CommandeService;
-import com.commerce.commande.persistence.model.Commande;
+import javax.validation.Valid;
 
 @RestController
-@CrossOrigin()
 public class CommandeController {
-
-    private static final Logger LOG = LoggerFactory.getLogger(CommandeController.class);
 
     private CommandeService commandeService;
 
@@ -25,44 +21,20 @@ public class CommandeController {
     }
 
     @GetMapping(value = "/commande/{id}")
-    public Commande recupererUneCommande(@PathVariable final Long id) {
+    public Commande lookForOneCommande(@PathVariable final Long id) {
 
-        CommandeController.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
-
-        final Commande commandeRecuperee = this.commandeService.getCommande(id);
-
-        CommandeController.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
-
-        return commandeRecuperee;
+        return this.commandeService.getCommande(id);
     }
 
     @PostMapping(value = "/commande")
-    public ResponseEntity<Commande> ajouterCommande(@RequestBody final Commande commande) {
+    public ResponseEntity<Commande> addCommande(@Valid @RequestBody final Commande commande) {
 
-        CommandeController.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
-
-        final ResponseEntity<Commande> commandeAjoutee = new ResponseEntity<Commande>(this.commandeService.postCommande(commande), HttpStatus.CREATED);
-
-        CommandeController.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
-
-        return commandeAjoutee;
+        return new ResponseEntity<>(this.commandeService.postCommande(commande), HttpStatus.CREATED);
     }
 
-    /*
-     * Permet de mettre à jour une commande existante.
-     * save() mettra à jours uniquement les champs renseignés dans l'objet commande reçu. Ainsi dans ce cas, comme le champs date dans "commande"
-     * n'est
-     * pas renseigné, la date précédemment enregistrée restera en place
-     **/
-    @PutMapping(value = "/commande")
-    public ResponseEntity<Commande> updateCommande(@RequestBody final Commande commande) {
+    @PatchMapping(value = "/commande")
+    public ResponseEntity<Commande> updateCommande(@Valid @RequestBody final Commande commande) {
 
-        CommandeController.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
-
-        final ResponseEntity<Commande> commandeUpdated = new ResponseEntity<Commande>(this.commandeService.putCommande(commande), HttpStatus.CREATED);
-
-        CommandeController.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
-
-        return commandeUpdated;
+        return new ResponseEntity<>(this.commandeService.patchCommande(commande), HttpStatus.CREATED);
     }
 }

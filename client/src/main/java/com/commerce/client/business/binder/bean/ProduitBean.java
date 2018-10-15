@@ -2,88 +2,88 @@ package com.commerce.client.business.binder.bean;
 
 public class ProduitBean {
 
-	private Long	id;
-	private String	titre;
-	private String	description;
-	private String	image;
-	private Double	prix;
+    private Long id;
+    private String titre;
+    private String description;
+    private String image;
+    private Double prix;
 
-	public ProduitBean() {
+    public ProduitBean() {
 
-	}
+    }
 
-	public ProduitBean(final String titre, final String description, final String image, final Double prix) {
+    public ProduitBean(final String titre, final String description, final String image, final Double prix) {
 
-		this.titre = titre;
-		this.description = description;
-		this.image = image;
-		this.prix = prix;
-	}
+        this.titre = titre;
+        this.description = description;
+        this.image = image;
+        this.prix = prix;
+    }
 
-	public ProduitBean(final Long id, final String titre, final String description, final String image,
-			final Double prix) {
+    public ProduitBean(final Long id, final String titre, final String description, final String image,
+                       final Double prix) {
 
-		this.id = id;
-		this.titre = titre;
-		this.description = description;
-		this.image = image;
-		this.prix = prix;
-	}
+        this.id = id;
+        this.titre = titre;
+        this.description = description;
+        this.image = image;
+        this.prix = prix;
+    }
 
-	public Long getId() {
+    public Long getId() {
 
-		return this.id;
-	}
+        return this.id;
+    }
 
-	public String getTitre() {
+    public void setId(final Long id) {
 
-		return this.titre;
-	}
+        this.id = id;
+    }
 
-	public String getDescription() {
+    public String getTitre() {
 
-		return this.description;
-	}
+        return this.titre;
+    }
 
-	public String getImage() {
+    public void setTitre(final String titre) {
 
-		return this.image;
-	}
+        this.titre = titre;
+    }
 
-	public Double getPrix() {
+    public String getDescription() {
 
-		return this.prix;
-	}
+        return this.description;
+    }
 
-	public void setId(final Long id) {
+    public void setDescription(final String description) {
 
-		this.id = id;
-	}
+        this.description = description;
+    }
 
-	public void setTitre(final String titre) {
+    public String getImage() {
 
-		this.titre = titre;
-	}
+        return this.image;
+    }
 
-	public void setDescription(final String description) {
+    public void setImage(final String image) {
 
-		this.description = description;
-	}
+        this.image = image;
+    }
 
-	public void setImage(final String image) {
+    public Double getPrix() {
 
-		this.image = image;
-	}
+        return this.prix;
+    }
 
-	public void setPrix(final Double prix) {
+    public void setPrix(final Double prix) {
 
-		this.prix = prix;
-	}
+        this.prix = prix;
+    }
 
-	@Override
-	public String toString() {
+    @Override
+    public String toString() {
 
-		return "ProduitBean{" + "id=" + this.id + ", titre='" + this.titre + '\'' + ", description='" + this.description
-				+ '\'' + ", image='" + this.image + '\'' + ", prix=" + this.prix + '}';
-	}
+        return "ProduitBean{" + "id=" + this.id + ", titre='" + this.titre + '\'' + ", description='" + this.description
+                + '\'' + ", image='" + this.image + '\'' + ", prix=" + this.prix + '}';
+    }
 }

@@ -1,12 +1,12 @@
 package com.commerce.produit.business.service;
 
-import java.util.List;
-
 import com.commerce.produit.persistence.model.Produit;
+
+import java.util.List;
 
 public interface ProduitService {
 
-	List<Produit> getProduits();
+    List<Produit> getProduits();
 
-	Produit getProduit(Long id);
+    Produit getProduit(Long id);
 }

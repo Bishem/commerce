@@ -1,22 +1,25 @@
 package com.commerce.paiement.business.binder.proxy;
 
+import com.commerce.paiement.business.binder.bean.CommandeBean;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.commerce.paiement.business.binder.bean.CommandeBean;
+import javax.validation.Valid;
 
+@Component
+@FeignClient(name = "zuul")
 @RibbonClient(name = "commande")
-@FeignClient(name = "commande")
 public interface CommandeProxy {
 
-	@GetMapping(value = "/commande/{idProduit}")
-	CommandeBean recupererUneCommande(@PathVariable(value = "idProduit") final Long id);
+    @GetMapping(value = "/commande/commande/{id}")
+    CommandeBean lookForOneCommande(@PathVariable(value = "id") final Long id);
 
-	@PutMapping(value = "/commande")
-	ResponseEntity<CommandeBean> updateCommande(@RequestBody final CommandeBean commandeBean);
+    @PatchMapping(value = "/commande/commande")
+    ResponseEntity<CommandeBean> updateCommande(@Valid @RequestBody final CommandeBean commandeBean);
 }

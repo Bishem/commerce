@@ -2,75 +2,75 @@ package com.commerce.client.business.binder.bean;
 
 public class PaiementBean {
 
-	private Long	id;
-	private Long	numeroCarte;
-	private Double	montant;
+    private Long id;
+    private Long numeroCarte;
+    private Double montant;
 
-	private Long idCommande;
+    private Long idCommande;
 
-	public PaiementBean() {
+    public PaiementBean() {
 
-	}
+    }
 
-	public PaiementBean(final Long numeroCarte, final Double montant, final Long idCommande) {
+    public PaiementBean(final Long numeroCarte, final Double montant, final Long idCommande) {
 
-		this.montant = montant;
-		this.numeroCarte = numeroCarte;
-		this.idCommande = idCommande;
-	}
+        this.montant = montant;
+        this.numeroCarte = numeroCarte;
+        this.idCommande = idCommande;
+    }
 
-	public PaiementBean(final Long id, final Long numeroCarte, final Double montant, final Long idCommande) {
+    public PaiementBean(final Long id, final Long numeroCarte, final Double montant, final Long idCommande) {
 
-		this.id = id;
-		this.numeroCarte = numeroCarte;
-		this.montant = montant;
-		this.idCommande = idCommande;
-	}
+        this.id = id;
+        this.numeroCarte = numeroCarte;
+        this.montant = montant;
+        this.idCommande = idCommande;
+    }
 
-	public Long getId() {
+    public Long getId() {
 
-		return this.id;
-	}
+        return this.id;
+    }
 
-	public Double getMontant() {
+    public void setId(final Long id) {
 
-		return this.montant;
-	}
+        this.id = id;
+    }
 
-	public Long getNumeroCarte() {
+    public Double getMontant() {
 
-		return this.numeroCarte;
-	}
+        return this.montant;
+    }
 
-	public Long getIdCommande() {
+    public void setMontant(final Double montant) {
 
-		return this.idCommande;
-	}
+        this.montant = montant;
+    }
 
-	public void setId(final Long id) {
+    public Long getNumeroCarte() {
 
-		this.id = id;
-	}
+        return this.numeroCarte;
+    }
 
-	public void setMontant(final Double montant) {
+    public void setNumeroCarte(final Long numeroCarte) {
 
-		this.montant = montant;
-	}
+        this.numeroCarte = numeroCarte;
+    }
 
-	public void setNumeroCarte(final Long numeroCarte) {
+    public Long getIdCommande() {
 
-		this.numeroCarte = numeroCarte;
-	}
+        return this.idCommande;
+    }
 
-	public void setIdCommande(final Long idCommande) {
+    public void setIdCommande(final Long idCommande) {
 
-		this.idCommande = idCommande;
-	}
+        this.idCommande = idCommande;
+    }
 
-	@Override
-	public String toString() {
+    @Override
+    public String toString() {
 
-		return "PaiementBean{" + "id=" + this.id + ", numeroCarte=" + this.numeroCarte + ", montant=" + this.montant
-				+ ", idCommande=" + this.idCommande + '}';
-	}
+        return "PaiementBean{" + "id=" + this.id + ", numeroCarte=" + this.numeroCarte + ", montant=" + this.montant
+                + ", idCommande=" + this.idCommande + '}';
+    }
 }

@@ -1,46 +1,45 @@
 package com.commerce.zuul.filter;
 
-import javax.servlet.http.HttpServletResponse;
-
+import com.netflix.zuul.ZuulFilter;
+import com.netflix.zuul.context.RequestContext;
+import com.netflix.zuul.exception.ZuulException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.netflix.zuul.ZuulFilter;
-import com.netflix.zuul.context.RequestContext;
-import com.netflix.zuul.exception.ZuulException;
+import javax.servlet.http.HttpServletResponse;
 
 @Component
 public class ResponseFilter extends ZuulFilter {
 
-	private static final Logger LOG = LoggerFactory.getLogger(ResponseFilter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ResponseFilter.class);
 
-	@Override
-	public boolean shouldFilter() {
+    @Override
+    public boolean shouldFilter() {
 
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	public Object run() throws ZuulException {
+    @Override
+    public Object run() throws ZuulException {
 
-		final HttpServletResponse response = RequestContext.getCurrentContext().getResponse();
+        final HttpServletResponse response = RequestContext.getCurrentContext().getResponse();
 
-		ResponseFilter.LOG.info("**** Reponse interceptée ! Le Status est : {}", response.getStatus());
+        ResponseFilter.LOG.info("**** Reponse interceptée ! Le Status est : {}", response.getStatus());
 
-		return null;
-	}
+        return null;
+    }
 
-	@Override
-	public String filterType() {
+    @Override
+    public String filterType() {
 
-		return "pre";
-	}
+        return "pre";
+    }
 
-	@Override
-	public int filterOrder() {
+    @Override
+    public int filterOrder() {
 
-		return 1;
-	}
+        return 1;
+    }
 
 }

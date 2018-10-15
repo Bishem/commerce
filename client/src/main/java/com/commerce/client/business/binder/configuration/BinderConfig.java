@@ -1,18 +1,17 @@
 package com.commerce.client.business.binder.configuration;
 
-import java.nio.charset.StandardCharsets;
-
+import feign.auth.BasicAuthRequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import feign.auth.BasicAuthRequestInterceptor;
+import java.nio.charset.StandardCharsets;
 
 @Configuration
 public class BinderConfig {
 
-	@Bean
-	BasicAuthRequestInterceptor basicAuthRequestInterceptor() {
+    @Bean
+    BasicAuthRequestInterceptor basicAuthRequestInterceptor() {
 
-		return new BasicAuthRequestInterceptor("admin", "admin", StandardCharsets.UTF_8);
-	}
+        return new BasicAuthRequestInterceptor("admin", "admin", StandardCharsets.UTF_8);
+    }
 }

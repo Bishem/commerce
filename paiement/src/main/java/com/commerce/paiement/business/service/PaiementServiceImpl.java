@@ -1,80 +1,68 @@
 package com.commerce.paiement.business.service;
 
-import javax.transaction.Transactional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-
 import com.commerce.paiement.business.binder.bean.CommandeBean;
+import com.commerce.paiement.business.binder.bean.ExpeditionBean;
 import com.commerce.paiement.business.binder.proxy.CommandeProxy;
+import com.commerce.paiement.business.binder.proxy.ExpeditionProxy;
 import com.commerce.paiement.business.exception.PaiementExistantException;
 import com.commerce.paiement.business.exception.PaiementImpossibleException;
 import com.commerce.paiement.persistence.dao.PaiementDao;
 import com.commerce.paiement.persistence.model.Paiement;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 @Transactional
 @Service
 public class PaiementServiceImpl implements PaiementService {
 
-	private static final Logger LOG = LoggerFactory.getLogger(PaiementServiceImpl.class);
+    private PaiementDao paiementDao;
 
-	private PaiementDao		paiementDao;
-	private CommandeProxy	commandeProxy;
+    private CommandeProxy commandeProxy;
+    private ExpeditionProxy expeditionProxy;
 
-	@Autowired
-	public void setPaiementDao(final PaiementDao paiementDao) {
+    @Autowired
+    public void setPaiementDao(final PaiementDao paiementDao) {
 
-		this.paiementDao = paiementDao;
-	}
+        this.paiementDao = paiementDao;
+    }
 
-	@Autowired
-	public void setCommandeProxy(final CommandeProxy commandeProxy) {
+    @Autowired
+    public void setExpeditionProxy(ExpeditionProxy expeditionProxy) {
 
-		this.commandeProxy = commandeProxy;
-	}
+        this.expeditionProxy = expeditionProxy;
+    }
 
-	@Override
-	public Paiement postPaiement(final Paiement paiement) {
+    @Autowired
+    public void setCommandeProxy(CommandeProxy commandeProxy) {
 
-		PaiementServiceImpl.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
+        this.commandeProxy = commandeProxy;
+    }
 
-		this.testerSiExiste(paiement);
+    @Override
+    public Paiement postPaiement(final Paiement paiement) {
 
-		final Paiement paiementPosted = this.paiementDao.save(paiement);
+        if (this.paiementDao.findByidCommande(paiement.getIdCommande()).isPresent()) {
 
-		this.mettreAJourCommande(paiement.getIdCommande());
+            throw new PaiementExistantException("La commande n°" + paiement.getIdCommande() + " est déjà payée");
+        } else {
 
-		PaiementServiceImpl.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
+            final Paiement paiementPosted = this.paiementDao.save(paiement);
 
-		return paiementPosted;
+            try {
 
-	}
+                CommandeBean commandeFound = commandeProxy.lookForOneCommande(paiement.getIdCommande());
+                commandeFound.setEstPayee(Boolean.TRUE);
+                commandeProxy.updateCommande(commandeFound);
 
-	private void testerSiExiste(final Paiement paiement) {
+                expeditionProxy.addExpedition(new ExpeditionBean(0, paiement.getIdCommande()));
 
-		final Paiement paiementFound = this.paiementDao.findByidCommande(paiement.getIdCommande());
+                return paiementPosted;
+            } catch (Exception e) {
 
-		if (paiementFound != null) {
-
-			throw new PaiementExistantException("Cette commande est déjà payée");
-		}
-	}
-
-	private void mettreAJourCommande(final Long idCommande) {
-
-		final CommandeBean commandeRecuperee = this.commandeProxy.recupererUneCommande(idCommande);
-
-		commandeRecuperee.setEstPayee(Boolean.TRUE);
-
-		final ResponseEntity<CommandeBean> commandeUpdated = this.commandeProxy.updateCommande(commandeRecuperee);
-
-		if (!commandeUpdated.getStatusCode().equals(HttpStatus.CREATED)) {
-
-			throw new PaiementImpossibleException("La commande n°" + idCommande + " de ce paiement n'as pas pu être validée");
-		}
-	}
+                throw new PaiementImpossibleException("La commande n°" + paiement.getIdCommande() + " n'as pas put etre expediee");
+            }
+        }
+    }
 }

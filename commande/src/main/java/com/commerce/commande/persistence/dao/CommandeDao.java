@@ -1,11 +1,10 @@
 package com.commerce.commande.persistence.dao;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-
 import com.commerce.commande.persistence.model.Commande;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-@RepositoryRestResource
-public interface CommandeDao extends JpaRepository<Commande, Long> {
+@Repository
+public interface CommandeDao extends CrudRepository<Commande, Long> {
 
 }

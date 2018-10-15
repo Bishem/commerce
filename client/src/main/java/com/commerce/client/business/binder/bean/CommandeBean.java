@@ -4,89 +4,89 @@ import java.util.Date;
 
 public class CommandeBean {
 
-	private Long	id;
-	private Date	date;
-	private Integer	quantite;
-	private Boolean	estPayee;
+    private Long id;
+    private Date date;
+    private Integer quantite;
+    private Boolean estPayee;
 
-	private Long idProduit;
+    private Long idProduit;
 
-	public CommandeBean() {
+    public CommandeBean() {
 
-	}
+    }
 
-	public CommandeBean(final Date date, final Integer quantite, final Boolean estPayee, final Long idProduit) {
+    public CommandeBean(final Date date, final Integer quantite, final Boolean estPayee, final Long idProduit) {
 
-		this.date = date;
-		this.quantite = quantite;
-		this.estPayee = estPayee;
-		this.idProduit = idProduit;
-	}
+        this.date = date;
+        this.quantite = quantite;
+        this.estPayee = estPayee;
+        this.idProduit = idProduit;
+    }
 
-	public CommandeBean(final Long id, final Date date, final Integer quantite, final Boolean estPayee,
-			final Long idProduit) {
+    public CommandeBean(final Long id, final Date date, final Integer quantite, final Boolean estPayee,
+                        final Long idProduit) {
 
-		this.id = id;
-		this.date = date;
-		this.quantite = quantite;
-		this.estPayee = estPayee;
-		this.idProduit = idProduit;
-	}
+        this.id = id;
+        this.date = date;
+        this.quantite = quantite;
+        this.estPayee = estPayee;
+        this.idProduit = idProduit;
+    }
 
-	public Long getId() {
+    public Long getId() {
 
-		return this.id;
-	}
+        return this.id;
+    }
 
-	public Date getDate() {
+    public void setId(final Long id) {
 
-		return this.date;
-	}
+        this.id = id;
+    }
 
-	public Boolean getEstPayee() {
+    public Date getDate() {
 
-		return this.estPayee;
-	}
+        return this.date;
+    }
 
-	public Long getIdProduit() {
+    public void setDate(final Date date) {
 
-		return this.idProduit;
-	}
+        this.date = date;
+    }
 
-	public Integer getQuantite() {
+    public Boolean getEstPayee() {
 
-		return this.quantite;
-	}
+        return this.estPayee;
+    }
 
-	public void setQuantite(final Integer quantite) {
+    public void setEstPayee(final Boolean estPayee) {
 
-		this.quantite = quantite;
-	}
+        this.estPayee = estPayee;
+    }
 
-	public void setId(final Long id) {
+    public Long getIdProduit() {
 
-		this.id = id;
-	}
+        return this.idProduit;
+    }
 
-	public void setDate(final Date date) {
+    public void setIdProduit(final Long idProduit) {
 
-		this.date = date;
-	}
+        this.idProduit = idProduit;
+    }
 
-	public void setEstPayee(final Boolean estPayee) {
+    public Integer getQuantite() {
 
-		this.estPayee = estPayee;
-	}
+        return this.quantite;
+    }
 
-	public void setIdProduit(final Long idProduit) {
+    public void setQuantite(final Integer quantite) {
 
-		this.idProduit = idProduit;
-	}
+        this.quantite = quantite;
+    }
 
-	@Override
-	public String toString() {
+    @Override
+    public String toString() {
 
-		return "CommandeBean{" + "id=" + this.id + ", date=" + this.date + ", quantite=" + this.quantite + ", estPayee="
-				+ this.estPayee + ", idProduit=" + this.idProduit + '}';
-	}
+        return "CommandeBean{" + "id=" + this.id + ", date=" + this.date + ", quantite=" + this.quantite + ", estPayee="
+                + this.estPayee + ", idProduit=" + this.idProduit + '}';
+    }
 }

@@ -1,71 +1,85 @@
 package com.commerce.commande.business.service;
 
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import com.commerce.commande.business.binder.proxy.ExpeditionProxy;
+import com.commerce.commande.business.exception.CommandeExistanteException;
+import com.commerce.commande.business.exception.CommandeImpossibleException;
 import com.commerce.commande.business.exception.CommandeIntrouvableException;
 import com.commerce.commande.persistence.dao.CommandeDao;
 import com.commerce.commande.persistence.model.Commande;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Transactional
 @Service
 public class CommandeServiceImpl implements CommandeService {
 
-	private static final Logger LOG = LoggerFactory.getLogger(CommandeServiceImpl.class);
+    private CommandeDao commandeDao;
 
-	private CommandeDao commandeDao;
+    private ExpeditionProxy expeditionProxy;
 
-	@Autowired
-	public void setCommandeDao(final CommandeDao commandeDao) {
+    @Autowired
+    public void setCommandeDao(final CommandeDao commandeDao) {
 
-		this.commandeDao = commandeDao;
-	}
+        this.commandeDao = commandeDao;
+    }
 
-	@Override
-	public Commande getCommande(final Long id) {
+    @Autowired
+    public void setExpeditionProxy(ExpeditionProxy expeditionProxy) {
 
-		CommandeServiceImpl.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
+        this.expeditionProxy = expeditionProxy;
+    }
 
-		final Optional<Commande> commandeFound = this.commandeDao.findById(id);
+    @Override
+    public Commande getCommande(final Long id) {
 
-		if (!commandeFound.isPresent()) {
+        final Optional<Commande> commandeFound = this.commandeDao.findById(id);
 
-			throw new CommandeIntrouvableException("Cette commande n'existe pas");
-		} else {
+        if (!commandeFound.isPresent()) {
 
-			CommandeServiceImpl.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
+            throw new CommandeIntrouvableException("La commande n°" + id + " n'existe pas");
+        } else {
 
-			return commandeFound.get();
-		}
-	}
+            return commandeFound.get();
+        }
+    }
 
-	@Override
-	public Commande postCommande(final Commande commande) {
+    @Override
+    public Commande postCommande(final Commande commande) {
 
-		CommandeServiceImpl.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
+        if (commandeDao.findById(commande.getId()).isPresent()) {
 
-		final Commande commandePosted = this.commandeDao.save(commande);
+            throw new CommandeExistanteException("La commande n°" + commande.getId() + " existe deja");
+        } else {
 
-		CommandeServiceImpl.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
+            return this.commandeDao.save(commande);
+        }
+    }
 
-		return commandePosted;
-	}
+    @Override
+    public Commande patchCommande(final Commande commande) {
 
-	@Override
-	public Commande putCommande(final Commande commande) {
+        if (!commandeDao.findById(commande.getId()).isPresent()) {
 
-		CommandeServiceImpl.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
+            throw new CommandeIntrouvableException("La commande n°" + commande.getId() + " n'existe pas");
+        } else {
 
-		final Commande commandePut = this.commandeDao.save(commande);
+            Commande commandePatched = this.commandeDao.save(commande);
 
-		CommandeServiceImpl.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
+            try {
 
-		return commandePut;
-	}
+                /* TODO make find by idCommande in expedition microservice
+                * change proxies that uses it (this one obviously) accordingly
+                * */
+                expeditionProxy.lookForOneExpedition(null);
+
+                return commandePatched;
+            }catch (Exception e) {
+
+                throw new CommandeImpossibleException("La commande n°" + commande.getId() + " n'as pas pu etre validee");
+            }
+        }
+    }
 }

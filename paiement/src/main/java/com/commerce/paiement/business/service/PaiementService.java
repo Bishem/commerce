@@ -4,6 +4,6 @@ import com.commerce.paiement.persistence.model.Paiement;
 
 public interface PaiementService {
 
-	Paiement postPaiement(Paiement paiement);
+    Paiement postPaiement(Paiement paiement);
 
 }
