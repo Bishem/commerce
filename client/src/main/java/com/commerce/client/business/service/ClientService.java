@@ -9,13 +9,13 @@ import java.util.List;
 
 public interface ClientService {
 
-    List<ProduitBean> getAllProduits();
+    List<ProduitBean> listerProduits();
 
-    ProduitBean getProduitById(final Long id);
+    ProduitBean recupererProduit(final Long id);
 
-    CommandeBean getNewCommande(final Long idProduit);
+    CommandeBean creerCommande(final Long idProduit);
 
-    PaiementBean getNewPaiement(final Long idCommande);
+    PaiementBean creerPaiement(final Long idCommande);
 
-    ExpeditionBean getNewExpedition(Long idPaiement);
+    ExpeditionBean recupererExpedition(Long idPaiement);
 }

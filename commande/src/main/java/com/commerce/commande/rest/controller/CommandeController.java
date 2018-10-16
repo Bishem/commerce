@@ -21,20 +21,20 @@ public class CommandeController {
     }
 
     @GetMapping(value = "/commande/{id}")
-    public Commande lookForOneCommande(@PathVariable final Long id) {
+    public Commande getCommande(@PathVariable final Long id) {
 
-        return this.commandeService.getCommande(id);
+        return this.commandeService.readCommande(id);
     }
 
     @PostMapping(value = "/commande")
-    public ResponseEntity<Commande> addCommande(@Valid @RequestBody final Commande commande) {
+    public ResponseEntity<Commande> postCommande(@Valid @RequestBody final Commande commande) {
 
-        return new ResponseEntity<>(this.commandeService.postCommande(commande), HttpStatus.CREATED);
+        return new ResponseEntity<>(this.commandeService.createCommande(commande), HttpStatus.CREATED);
     }
 
     @PatchMapping(value = "/commande")
-    public ResponseEntity<Commande> updateCommande(@Valid @RequestBody final Commande commande) {
+    public ResponseEntity<Commande> patchCommande(@Valid @RequestBody final Commande commande) {
 
-        return new ResponseEntity<>(this.commandeService.patchCommande(commande), HttpStatus.CREATED);
+        return new ResponseEntity<>(this.commandeService.updateCommande(commande), HttpStatus.CREATED);
     }
 }

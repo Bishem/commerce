@@ -1,8 +1,6 @@
 package com.commerce.client.rest.controller;
 
 import com.commerce.client.business.service.ClientService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ClientController {
-
-    private static final Logger LOG = LoggerFactory.getLogger(ClientController.class);
-
+    
     private ClientService clientService;
 
     @Autowired
@@ -24,42 +20,27 @@ public class ClientController {
 
     @GetMapping("")
     public ModelAndView accueil() {
-
-        ClientController.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
-
+        
         final ModelAndView mav = new ModelAndView("accueil");
-
-        mav.addObject("produits", this.clientService.getAllProduits());
-
-        ClientController.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
-
+        mav.addObject("produits", this.clientService.listerProduits());
+        
         return mav;
     }
 
     @GetMapping("/detailler/{id}")
-    public ModelAndView ficheProduit(@PathVariable final Long id) {
-
-        ClientController.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
-
-        final ModelAndView mav = new ModelAndView("details");
-
-        mav.addObject("produit", this.clientService.getProduitById(id));
-
-        ClientController.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
-
+    public ModelAndView produit(@PathVariable final Long id) {
+        
+        final ModelAndView mav = new ModelAndView("produit");
+        mav.addObject("produit", this.clientService.recupererProduit(id));
+        
         return mav;
     }
 
     @GetMapping("/commander/{idProduit}")
     public ModelAndView commande(@PathVariable final Long idProduit) {
 
-        ClientController.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
-
         final ModelAndView mav = new ModelAndView("commande");
-
-        mav.addObject("commande", this.clientService.getNewCommande(idProduit));
-
-        ClientController.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
+        mav.addObject("commande", this.clientService.creerCommande(idProduit));
 
         return mav;
     }
@@ -67,27 +48,17 @@ public class ClientController {
     @GetMapping("/payer/{idCommande}")
     public ModelAndView paiement(@PathVariable final Long idCommande) {
 
-        ClientController.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
-
         final ModelAndView mav = new ModelAndView("paiement");
-
-        mav.addObject("paiement", this.clientService.getNewPaiement(idCommande));
-
-        ClientController.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
+        mav.addObject("paiement", this.clientService.creerPaiement(idCommande));
 
         return mav;
     }
 
-    @GetMapping("/suivre/{idPaiement}")
-    public ModelAndView expedition(@PathVariable final Long idPaiement) {
-
-        ClientController.LOG.info("**** using {} : {}", this.getClass().getSimpleName(), this.hashCode());
+    @GetMapping("/suivre/{idCommande}")
+    public ModelAndView expedition(@PathVariable final Long idCommande) {
 
         final ModelAndView mav = new ModelAndView("expedition");
-
-        mav.addObject("expedition", this.clientService.getNewExpedition(idPaiement));
-
-        ClientController.LOG.info("**** done with {} : {}", this.getClass().getSimpleName(), this.hashCode());
+        mav.addObject("expedition", this.clientService.recupererExpedition(idCommande));
 
         return mav;
     }

@@ -16,5 +16,5 @@ import javax.validation.Valid;
 public interface ExpeditionProxy {
 
     @PostMapping(value = "/expedition/expedition")
-    ResponseEntity<ExpeditionBean> addExpedition(@Valid @RequestBody final ExpeditionBean expeditionBean);
+    ResponseEntity<ExpeditionBean> postExpedition(@Valid @RequestBody final ExpeditionBean expeditionBean);
 }

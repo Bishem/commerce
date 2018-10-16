@@ -18,8 +18,8 @@ import javax.validation.Valid;
 public interface CommandeProxy {
 
     @GetMapping(value = "/commande/commande/{id}")
-    CommandeBean lookForOneCommande(@PathVariable(value = "id") final Long id);
+    CommandeBean getCommande(@PathVariable(value = "id") final Long id);
 
     @PatchMapping(value = "/commande/commande")
-    ResponseEntity<CommandeBean> updateCommande(@Valid @RequestBody final CommandeBean commandeBean);
+    ResponseEntity<CommandeBean> patchCommande(@Valid @RequestBody final CommandeBean commandeBean);
 }

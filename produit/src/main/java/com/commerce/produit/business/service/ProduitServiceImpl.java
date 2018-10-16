@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Transactional
 @Service
+@Transactional
 public class ProduitServiceImpl implements ProduitService {
 
     @Value(value = "${produit.limite}")
@@ -28,32 +28,31 @@ public class ProduitServiceImpl implements ProduitService {
     }
 
     @Override
-    public List<Produit> getProduits() {
+    public List<Produit> readProduits() {
 
-        final List<Produit> produitsFound = new ArrayList<>();
-        this.produitDao.findAll().forEach(produitsFound::add);
-//        this.produitDao.findAll().forEach( produit -> produitsFound.add(produit));
+        final List<Produit> produitsRed = new ArrayList<>();
+        this.produitDao.findAll().forEach(produitsRed::add);
 
-        if (produitsFound.isEmpty()) {
+        if (produitsRed.isEmpty()) {
 
             throw new ProduitIntrouvableException("Aucun produit n'est disponible à la vente");
         } else {
 
-            return produitsFound.subList(0, this.limite);
+            return produitsRed.subList(0, this.limite);
         }
     }
 
     @Override
-    public Produit getProduit(final Long id) {
+    public Produit readProduit(final Long id) {
 
-        final Optional<Produit> produitFound = this.produitDao.findById(id);
+        final Optional<Produit> produitRed = this.produitDao.findById(id);
 
-        if (!produitFound.isPresent()) {
+        if (!produitRed.isPresent()) {
 
             throw new ProduitIntrouvableException("Le produit correspondant à l'id " + id + " n'existe pas");
         } else {
 
-            return produitFound.get();
+            return produitRed.get();
         }
     }
 }

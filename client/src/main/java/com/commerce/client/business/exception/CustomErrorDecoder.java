@@ -1,7 +1,6 @@
 package com.commerce.client.business.exception;
 
 import feign.Response;
-import feign.Util;
 import feign.codec.ErrorDecoder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -9,8 +8,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 
-import java.io.IOException;
 import java.util.ArrayList;
+
+import static feign.Util.toByteArray;
 
 @Component
 public class CustomErrorDecoder implements ErrorDecoder {
@@ -22,17 +22,14 @@ public class CustomErrorDecoder implements ErrorDecoder {
 
         try {
 
-            final HttpHeaders responseHeaders = new HttpHeaders();
-
-            response.headers().entrySet().stream().forEach(entry -> responseHeaders.put(entry.getKey(), new ArrayList<>(entry.getValue())));
-
             final HttpStatus statusCode = HttpStatus.valueOf(response.status());
 
             final String statusText = response.reason();
 
-            byte[] responseBody;
+            final HttpHeaders responseHeaders = new HttpHeaders();
+            response.headers().entrySet().stream().forEach(entry -> responseHeaders.put(entry.getKey(), new ArrayList<>(entry.getValue())));
 
-            responseBody = Util.toByteArray(response.body().asInputStream());
+            byte[] responseBody =  toByteArray(response.body().asInputStream());
 
             if (response.status() >= 400 && response.status() <= 499) {
 
@@ -42,9 +39,9 @@ public class CustomErrorDecoder implements ErrorDecoder {
                 return new HttpServerErrorException(statusCode, statusText, responseHeaders, responseBody, null);
             }
 
-        } catch (final IOException e) {
+        } catch (final Exception e) {
 
-            throw new RuntimeException("Failed to process response body", e);
+            throw new RuntimeException("Failed to process response body : " + e.getClass().getName(), e);
         }
 
         return this.defaultErrorDecoder.decode(methodKey, response);

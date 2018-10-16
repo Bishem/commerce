@@ -4,9 +4,9 @@ import com.commerce.commande.persistence.model.Commande;
 
 public interface CommandeService {
 
-    Commande getCommande(final Long id);
+    Commande readCommande(final Long id);
 
-    Commande postCommande(final Commande commande);
+    Commande createCommande(final Commande commande);
 
-    Commande patchCommande(final Commande commande);
+    Commande updateCommande(final Commande commande);
 }

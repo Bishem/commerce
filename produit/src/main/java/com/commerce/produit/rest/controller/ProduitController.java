@@ -21,14 +21,14 @@ public class ProduitController {
     }
 
     @GetMapping(value = "/produit")
-    public List<Produit> lookForAllProduits() {
+    public List<Produit> getProduits() {
 
-        return this.produitService.getProduits();
+        return this.produitService.readProduits();
     }
 
     @GetMapping(value = "/produit/{id}")
-    public Produit lookForOneProduit(@PathVariable final Long id) {
+    public Produit getProduit(@PathVariable(value = "id") final Long id) {
 
-        return this.produitService.getProduit(id);
+        return this.produitService.readProduit(id);
     }
 }

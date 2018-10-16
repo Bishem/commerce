@@ -5,7 +5,6 @@ import com.commerce.paiement.business.binder.bean.ExpeditionBean;
 import com.commerce.paiement.business.binder.proxy.CommandeProxy;
 import com.commerce.paiement.business.binder.proxy.ExpeditionProxy;
 import com.commerce.paiement.business.exception.PaiementExistantException;
-import com.commerce.paiement.business.exception.PaiementImpossibleException;
 import com.commerce.paiement.persistence.dao.PaiementDao;
 import com.commerce.paiement.persistence.model.Paiement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
-@Transactional
 @Service
+@Transactional
 public class PaiementServiceImpl implements PaiementService {
 
     private PaiementDao paiementDao;
@@ -48,21 +47,23 @@ public class PaiementServiceImpl implements PaiementService {
             throw new PaiementExistantException("La commande n°" + paiement.getIdCommande() + " est déjà payée");
         } else {
 
-            final Paiement paiementPosted = this.paiementDao.save(paiement);
+            final Paiement paiementSaved = this.paiementDao.save(paiement);
 
-            try {
+            modifierCommande(paiement);
 
-                CommandeBean commandeFound = commandeProxy.lookForOneCommande(paiement.getIdCommande());
-                commandeFound.setEstPayee(Boolean.TRUE);
-                commandeProxy.updateCommande(commandeFound);
+            expeditionProxy.postExpedition(
+                    new ExpeditionBean(
+                            0,
+                            paiementSaved.getIdCommande()));
 
-                expeditionProxy.addExpedition(new ExpeditionBean(0, paiement.getIdCommande()));
-
-                return paiementPosted;
-            } catch (Exception e) {
-
-                throw new PaiementImpossibleException("La commande n°" + paiement.getIdCommande() + " n'as pas put etre expediee");
-            }
+            return paiementSaved;
         }
+    }
+
+    private void modifierCommande(Paiement paiement) {
+
+        CommandeBean commandeFound = commandeProxy.getCommande(paiement.getIdCommande());
+        commandeFound.setEstPayee(Boolean.TRUE);
+        commandeProxy.patchCommande(commandeFound);
     }
 }

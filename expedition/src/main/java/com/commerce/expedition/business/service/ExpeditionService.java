@@ -4,9 +4,9 @@ import com.commerce.expedition.persistence.model.Expedition;
 
 public interface ExpeditionService {
 
-    Expedition getExpedition(final Long id);
+    Expedition readExpedition(final Long id);
 
-    Expedition postExpedition(final Expedition expedition);
+    Expedition createExpedition(final Expedition expedition);
 
-    Expedition patchExpedition(final Expedition expedition);
+    Expedition updateExpedition(final Expedition expedition);
 }

@@ -23,21 +23,21 @@ public class ExpeditionServiceImpl implements ExpeditionService {
     }
 
     @Override
-    public Expedition getExpedition(final Long id) {
+    public Expedition readExpedition(final Long id) {
 
-        final Optional<Expedition> expeditionFound = this.expeditionDao.findById(id);
+        final Optional<Expedition> expeditionRed = this.expeditionDao.findById(id);
 
-        if (!expeditionFound.isPresent()) {
+        if (!expeditionRed.isPresent()) {
 
             throw new ExpeditionIntrouvableException("L'expedition n°" + id + "n'existe pas");
         } else {
 
-            return expeditionFound.get();
+            return expeditionRed.get();
         }
     }
 
     @Override
-    public Expedition postExpedition(final Expedition expedition) {
+    public Expedition createExpedition(final Expedition expedition) {
 
         if (expeditionDao.findByIdCommande(expedition.getIdCommande()).isPresent()) {
 
@@ -49,7 +49,7 @@ public class ExpeditionServiceImpl implements ExpeditionService {
     }
 
     @Override
-    public Expedition patchExpedition(final Expedition expedition) {
+    public Expedition updateExpedition(final Expedition expedition) {
 
 
         if (!expeditionDao.findByIdCommande(expedition.getIdCommande()).isPresent()) {

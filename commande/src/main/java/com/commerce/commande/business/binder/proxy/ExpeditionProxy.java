@@ -18,8 +18,8 @@ import javax.validation.Valid;
 public interface ExpeditionProxy {
 
     @GetMapping(value = "/expedition/expedition/{id}")
-    ExpeditionBean lookForOneExpedition(@PathVariable(value = "id") final Long id);
+    ExpeditionBean getExpedition(@PathVariable(value = "id") final Long id);
 
     @PatchMapping(value = "/expedition/expedition")
-    ResponseEntity<ExpeditionBean> updateExpedition(@Valid @RequestBody final ExpeditionBean expeditionBean);
+    ResponseEntity<ExpeditionBean> patchExpedition(@Valid @RequestBody final ExpeditionBean expeditionBean);
 }

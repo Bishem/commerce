@@ -1,8 +1,8 @@
 package com.commerce.commande.business.service;
 
+import com.commerce.commande.business.binder.bean.ExpeditionBean;
 import com.commerce.commande.business.binder.proxy.ExpeditionProxy;
 import com.commerce.commande.business.exception.CommandeExistanteException;
-import com.commerce.commande.business.exception.CommandeImpossibleException;
 import com.commerce.commande.business.exception.CommandeIntrouvableException;
 import com.commerce.commande.persistence.dao.CommandeDao;
 import com.commerce.commande.persistence.model.Commande;
@@ -12,12 +12,13 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
-@Transactional
 @Service
+@Transactional
 public class CommandeServiceImpl implements CommandeService {
 
     private CommandeDao commandeDao;
 
+    @Autowired
     private ExpeditionProxy expeditionProxy;
 
     @Autowired
@@ -33,21 +34,21 @@ public class CommandeServiceImpl implements CommandeService {
     }
 
     @Override
-    public Commande getCommande(final Long id) {
+    public Commande readCommande(final Long id) {
 
-        final Optional<Commande> commandeFound = this.commandeDao.findById(id);
+        final Optional<Commande> commandeRed = this.commandeDao.findById(id);
 
-        if (!commandeFound.isPresent()) {
+        if (!commandeRed.isPresent()) {
 
             throw new CommandeIntrouvableException("La commande n°" + id + " n'existe pas");
         } else {
 
-            return commandeFound.get();
+            return commandeRed.get();
         }
     }
 
     @Override
-    public Commande postCommande(final Commande commande) {
+    public Commande createCommande(final Commande commande) {
 
         if (commandeDao.findById(commande.getId()).isPresent()) {
 
@@ -59,27 +60,25 @@ public class CommandeServiceImpl implements CommandeService {
     }
 
     @Override
-    public Commande patchCommande(final Commande commande) {
+    public Commande updateCommande(final Commande commande) {
 
         if (!commandeDao.findById(commande.getId()).isPresent()) {
 
             throw new CommandeIntrouvableException("La commande n°" + commande.getId() + " n'existe pas");
         } else {
 
-            Commande commandePatched = this.commandeDao.save(commande);
+            Commande commandeSaved = this.commandeDao.save(commande);
 
-            try {
+            modifierExpedition(commande);
 
-                /* TODO make find by idCommande in expedition microservice
-                * change proxies that uses it (this one obviously) accordingly
-                * */
-                expeditionProxy.lookForOneExpedition(null);
-
-                return commandePatched;
-            }catch (Exception e) {
-
-                throw new CommandeImpossibleException("La commande n°" + commande.getId() + " n'as pas pu etre validee");
-            }
+            return commandeSaved;
         }
+    }
+
+    private void modifierExpedition(Commande commande) {
+
+        ExpeditionBean expeditionFound = expeditionProxy.getExpedition(commande.getId());
+        expeditionFound.setEtat(1);
+        expeditionProxy.patchExpedition(expeditionFound);
     }
 }

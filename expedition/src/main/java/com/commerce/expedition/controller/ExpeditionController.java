@@ -20,21 +20,21 @@ public class ExpeditionController {
         this.expeditionService = expeditionService;
     }
 
-    @GetMapping(value = "/expedition/{id}")
-    public Expedition lookForOneExpedition(@PathVariable final Long id) {
+    @GetMapping(value = "/expedition/{idCommande}")
+    public Expedition getExpedition(@PathVariable final Long idCommande) {
 
-        return this.expeditionService.getExpedition(id);
+        return this.expeditionService.readExpedition(idCommande);
     }
 
     @PostMapping(value = "/expedition")
-    public ResponseEntity<Expedition> addExpedition(@Valid @RequestBody final Expedition expedition) {
+    public ResponseEntity<Expedition> postExpedition(@Valid @RequestBody final Expedition expedition) {
 
-        return new ResponseEntity<>(this.expeditionService.postExpedition(expedition), HttpStatus.CREATED);
+        return new ResponseEntity<>(this.expeditionService.createExpedition(expedition), HttpStatus.CREATED);
     }
 
     @PatchMapping(value = "/expedition")
-    public ResponseEntity<Expedition> updateExpedition(@Valid @RequestBody final Expedition expedition) {
+    public ResponseEntity<Expedition> patchExpedition(@Valid @RequestBody final Expedition expedition) {
 
-        return new ResponseEntity<>(this.expeditionService.patchExpedition(expedition), HttpStatus.CREATED);
+        return new ResponseEntity<>(this.expeditionService.updateExpedition(expedition), HttpStatus.CREATED);
     }
 }
